@@ -24,10 +24,8 @@
 ```ts
 const himanshu = {
   role: "AI Full Stack Developer Intern @ The AI Signal",
-  education: "B.Tech CSE @ IIIT Sonepat (CGPA 8.48)",
+  education: "B.Tech CSE @ IIIT Sonepat",
   location: "Mau, Uttar Pradesh, India",
-  currentlyBuilding: ["Multi-Agent AI Platforms", "RAG Pipelines", "Scalable Microservices"],
-  stack: ["Next.js", "React", "TypeScript", "Node.js", "PostgreSQL", "LangGraph"],
   competitiveProgramming: {
     leetcode: "Knight (1900+) · 1110+ solved",
     codechef: "4★ (1800+) · 300+ solved",
@@ -40,7 +38,7 @@ const himanshu = {
 
 - 🔭 Working on **production AI features** with Next.js, Node.js, PostgreSQL & LLMs
 - 🤖 Exploring **LangGraph, LangChain, RAG & multi-agent orchestration**
-- 🎓 Participant — **Amazon ML Summer School 2026**
+
 - 📫 Reach me at **himanshugpt0005@gmail.com**
 
 ---
