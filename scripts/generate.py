@@ -36,13 +36,13 @@ MUTED = "#7c83b0"
 
 PROFILE = [
     ("Subject", "Himanshu Gupta"),
-    ("Role", "AI Full Stack Developer Intern @ The AI Signal"),
+    ("Role", "AI Full Stack Intern @ The AI Signal"),
     ("Origin", "Mau, Uttar Pradesh, India"),
     ("Education", "B.Tech CSE @ IIIT Sonepat"),
     ("Status", "Building multi-agent AI systems"),
     ("ToolChain", "VS Code · Git · Docker · Postman"),
     None,
-    ("Core.Lang", "C++, TypeScript, JavaScript, Python, Java"),
+    ("Core.Lang", "C++, TypeScript, JavaScript, Python"),
     ("Core.Frontend", "React, Next.js, Redux, Tailwind"),
     ("Core.Backend", "Node.js, Express, Kafka, Redis"),
     ("Core.Database", "PostgreSQL, MongoDB, MySQL, Firebase"),
@@ -383,72 +383,83 @@ def ring(cx, cy, r, pct, label, sub=None, color="url(#neon)", width=7, size=15):
 # ---------------------------------------------------------------- hero
 
 def hero(total, current, longest, first_day, cur_range):
-    W, H = 1000, 670
-    b = ['<text x="34" y="36" font-size="15" font-weight="800" fill="%s">%s <tspan fill="%s">/</tspan> README<tspan fill="%s">.md</tspan></text>'
+    W = 860
+    b = ['<text x="24" y="36" font-size="17" font-weight="800" fill="%s">%s <tspan fill="%s">/</tspan> README<tspan fill="%s">.md</tspan></text>'
          % (TEXT, USER, MUTED, CYAN)]
-    b.append(window(24, 56, 952, 456, "himanshugpt0005@gmail.com"))
 
-    # Visual map
-    b.append('<text x="56" y="126" font-size="10" letter-spacing="2" fill="%s">VISUAL.MAP</text>' % MUTED)
-    b.append('<rect x="52" y="136" width="352" height="356" rx="6" fill="#060622" stroke="#2a2a6a"/>')
-    b.append(brackets(52, 136, 352, 356))
-    b.append(morph(62, 146, 332, 340))
-    b.append('<rect class="scan" x="53" y="137" width="350" height="3" fill="%s" opacity=".35"/>' % CYAN)
-
-    # System info
-    x0, y = 432, 124
-    b.append('<text x="%d" y="%d" font-size="15" font-weight="800" fill="%s" filter="url(#softglow)">SYSTEM.INFO</text>' % (x0, y, CYAN))
+    # System info (laid out first: its length sets the window height)
+    x0, y = 368, 124
+    info = ['<text x="%d" y="%d" font-size="17" font-weight="800" fill="%s" filter="url(#softglow)">SYSTEM.INFO</text>' % (x0, y, CYAN)]
     y += 12
-    b.append('<rect x="%d" y="%d" width="150" height="20" rx="4" fill="%s"/>' % (x0, y, VIOLET))
-    b.append('<text x="%d" y="%d" font-size="12" font-weight="800" fill="#fff">himanshu@github</text>' % (x0 + 10, y + 14))
-    y += 38
+    info.append('<rect x="%d" y="%d" width="160" height="23" rx="4" fill="%s"/>' % (x0, y, VIOLET))
+    info.append('<text x="%d" y="%d" font-size="13.5" font-weight="800" fill="#fff">himanshu@github</text>' % (x0 + 10, y + 16))
+    y += 46
     delay = .3
     for row in PROFILE:
         if row is None:
-            y += 6
+            y += 7
             continue
         if isinstance(row, str):
-            b.append('<text class="reveal" style="animation-delay:%.2fs" x="%d" y="%d" font-size="12.5" font-weight="700" fill="%s">%s</text>'
-                     % (delay, x0, y, TEXT, e(row)))
+            info.append('<text class="reveal" style="animation-delay:%.2fs" x="%d" y="%d" font-size="14" font-weight="700" fill="%s">%s</text>'
+                        % (delay, x0, y, TEXT, e(row)))
         else:
             k, v = row
-            key = (k + " ").ljust(16, ".")
+            key = (k + " ").ljust(15, ".")
             kc = MINT if k.startswith(("Core", "Grid")) else CYAN
-            b.append('<text class="reveal" style="animation-delay:%.2fs" x="%d" y="%d" font-size="12.5">'
-                     '<tspan fill="%s" font-weight="700">%s</tspan><tspan fill="#3b3f74">%s</tspan>'
-                     '<tspan fill="%s"> %s</tspan></text>'
-                     % (delay, x0, y, kc, e(k), e(key[len(k):]), TEXT, e(v)))
-        y += 16.5
+            info.append('<text class="reveal" style="animation-delay:%.2fs" x="%d" y="%d" font-size="14">'
+                        '<tspan fill="%s" font-weight="700">%s</tspan><tspan fill="#3b3f74">%s</tspan>'
+                        '<tspan fill="%s"> %s</tspan></text>'
+                        % (delay, x0, y, kc, e(k), e(key[len(k):]), TEXT, e(v)))
+        y += 19.5
         delay += .08
-    b.append('<text x="%d" y="%d" font-size="12.5" fill="%s">▸ <tspan fill="%s">./more_about_me.sh</tspan><tspan class="cursor" fill="%s"> █</tspan></text>'
-             % (x0, y + 4, PINK, MUTED, CYAN))
+    info.append('<text x="%d" y="%d" font-size="14" fill="%s">▸ <tspan fill="%s">./more_about_me.sh</tspan><tspan class="cursor" fill="%s"> █</tspan></text>'
+                % (x0, y + 6, PINK, MUTED, CYAN))
+    bottom = int(y + 30)
+
+    b.append(window(16, 56, W - 32, bottom - 56, "himanshugpt0005@gmail.com"))
+
+    # Visual map: particle morph, centred in a tall framed box
+    bx, by, bw = 36, 128, 312
+    bh = bottom - 22 - by
+    side = bw - 16
+    my = by + (bh - side) // 2
+    b.append('<text x="%d" y="%d" font-size="11" letter-spacing="2" fill="%s">VISUAL.MAP</text>' % (bx + 2, by - 10, MUTED))
+    b.append('<rect x="%d" y="%d" width="%d" height="%d" rx="6" fill="#060622" stroke="#2a2a6a"/>' % (bx, by, bw, bh))
+    b.append(brackets(bx, by, bw, bh))
+    b.append('<text x="%d" y="%d" font-size="11" fill="%s">[ x:0.42  y:0.17 ]</text>' % (bx + 14, by + 26, "#4b4f8a"))
+    b.append('<text x="%d" y="%d" font-size="11" fill="%s"><tspan class="pulse" fill="%s">●</tspan> rendering himanshu.exe</text>'
+             % (bx + 14, by + bh - 14, "#4b4f8a", PINK))
+    b.append(morph(bx + 8, my, side, side))
+    b.append('<rect class="scan" x="%d" y="%d" width="%d" height="3" fill="%s" opacity=".35"/>' % (bx + 1, by + 1, bw - 2, CYAN))
+    b += info
 
     # Streak row
-    top = 532
-    b.append('<rect x="24" y="%d" width="952" height="118" rx="14" fill="%s" stroke="#23235a"/>' % (top, PANEL))
-    for xx in (341, 659):
-        b.append('<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-opacity=".5"/>' % (xx, top + 18, xx, top + 100, CYAN))
-    b.append('<text x="182" y="%d" text-anchor="middle" font-size="34" font-weight="800" fill="%s" filter="url(#softglow)">%s</text>' % (top + 54, TEXT, "{:,}".format(total)))
-    b.append('<text x="182" y="%d" text-anchor="middle" font-size="13" fill="%s">Total Contributions</text>' % (top + 78, CYAN))
-    b.append('<text x="182" y="%d" text-anchor="middle" font-size="10" fill="%s">%s - Present</text>' % (top + 96, MUTED, e(first_day)))
-    b.append(ring(500, top + 44, 28, min(current / max(longest, 1), 1), str(current), size=20))
-    b.append('<text x="500" y="%d" text-anchor="middle" font-size="13" font-weight="700" fill="%s">Current Streak</text>' % (top + 96, PINK))
-    b.append('<text x="500" y="%d" text-anchor="middle" font-size="10" fill="%s">%s</text>' % (top + 111, MUTED, e(cur_range)))
-    b.append('<text x="818" y="%d" text-anchor="middle" font-size="34" font-weight="800" fill="%s" filter="url(#softglow)">%d</text>' % (top + 54, TEXT, longest))
-    b.append('<text x="818" y="%d" text-anchor="middle" font-size="13" fill="%s">Longest Streak</text>' % (top + 78, VIOLET))
-    b.append('<text x="818" y="%d" text-anchor="middle" font-size="10" fill="%s">days in a row</text>' % (top + 96, MUTED))
+    top = bottom + 18
+    c1, c2, c3 = W // 6, W // 2, W * 5 // 6
+    b.append('<rect x="16" y="%d" width="%d" height="136" rx="14" fill="%s" stroke="#23235a"/>' % (top, W - 32, PANEL))
+    for xx in (W // 3, W * 2 // 3):
+        b.append('<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-opacity=".5"/>' % (xx, top + 20, xx, top + 116, CYAN))
+    b.append('<text x="%d" y="%d" text-anchor="middle" font-size="40" font-weight="800" fill="%s" filter="url(#softglow)">%s</text>' % (c1, top + 60, TEXT, "{:,}".format(total)))
+    b.append('<text x="%d" y="%d" text-anchor="middle" font-size="15" fill="%s">Total Contributions</text>' % (c1, top + 88, CYAN))
+    b.append('<text x="%d" y="%d" text-anchor="middle" font-size="12" fill="%s">%s - Present</text>' % (c1, top + 108, MUTED, e(first_day)))
+    b.append(ring(c2, top + 48, 31, min(current / max(longest, 1), 1), str(current), size=22))
+    b.append('<text x="%d" y="%d" text-anchor="middle" font-size="15" font-weight="700" fill="%s">Current Streak</text>' % (c2, top + 106, PINK))
+    b.append('<text x="%d" y="%d" text-anchor="middle" font-size="12" fill="%s">%s</text>' % (c2, top + 124, MUTED, e(cur_range)))
+    b.append('<text x="%d" y="%d" text-anchor="middle" font-size="40" font-weight="800" fill="%s" filter="url(#softglow)">%d</text>' % (c3, top + 60, TEXT, longest))
+    b.append('<text x="%d" y="%d" text-anchor="middle" font-size="15" fill="%s">Longest Streak</text>' % (c3, top + 88, VIOLET))
+    b.append('<text x="%d" y="%d" text-anchor="middle" font-size="12" fill="%s">days in a row</text>' % (c3, top + 108, MUTED))
 
     style = """
-    @keyframes scan { from { transform: translateY(0); } to { transform: translateY(352px); } }
+    @keyframes scan { from { transform: translateY(0); } to { transform: translateY(%dpx); } }
     .scan { animation: scan 3.2s linear infinite; }
-    """
-    return svg(W, H, "\n  ".join(b), style)
+    """ % (bh - 4)
+    return svg(W, top + 152, "\n  ".join(b), style)
 
 
 # ---------------------------------------------------------------- stats
 
 def stats(base, days, totals, colors):
-    W, H = 1000, 290
+    W, H = 860, 320
     cc = base["contributionsCollection"]
     repos = base["repositories"]["nodes"]
     rows = [
@@ -459,32 +470,33 @@ def stats(base, days, totals, colors):
         ("⌘", "Public Repos", base["repositories"]["totalCount"]),
         ("◎", "Contributed to (last year)", base["repositoriesContributedTo"]["totalCount"]),
     ]
-    b = [window(24, 20, 952, 250, "~/stats --live")]
-    b.append('<text x="56" y="96" font-size="15" font-weight="800" fill="%s" filter="url(#softglow)">Himanshu\'s GitHub Stats</text>' % PINK)
+    b = [window(16, 16, W - 32, H - 32, "~/stats --live")]
+    b.append('<text x="40" y="98" font-size="17" font-weight="800" fill="%s" filter="url(#softglow)">Himanshu\'s GitHub Stats</text>' % PINK)
     for i, (icon, label, val) in enumerate(rows):
-        y = 126 + i * 23
-        b.append('<text class="reveal" style="animation-delay:%.2fs" x="56" y="%d" font-size="13"><tspan fill="%s">%s</tspan>'
+        y = 132 + i * 28
+        b.append('<text class="reveal" style="animation-delay:%.2fs" x="40" y="%d" font-size="14.5"><tspan fill="%s">%s</tspan>'
                  '<tspan fill="%s" dx="8">%s:</tspan></text>' % (.2 + i * .1, y, CYAN, icon, TEXT, e(label)))
-        b.append('<text class="reveal" style="animation-delay:%.2fs" x="400" y="%d" text-anchor="end" font-size="13" font-weight="800" fill="%s">%s</text>'
+        b.append('<text class="reveal" style="animation-delay:%.2fs" x="404" y="%d" text-anchor="end" font-size="15" font-weight="800" fill="%s">%s</text>'
                  % (.2 + i * .1, y, MINT, "{:,}".format(val)))
 
     # Languages
-    b.append('<line x1="440" y1="76" x2="440" y2="250" stroke="#23235a"/>')
-    b.append('<text x="476" y="96" font-size="15" font-weight="800" fill="%s" filter="url(#softglow)">Most Used Languages</text>' % CYAN)
+    lx, bw = 452, 372
+    b.append('<line x1="428" y1="76" x2="428" y2="286" stroke="#23235a"/>')
+    b.append('<text x="%d" y="98" font-size="17" font-weight="800" fill="%s" filter="url(#softglow)">Most Used Languages</text>' % (lx, CYAN))
     whole = float(sum(totals.values())) or 1
     top = [kv for kv in sorted(totals.items(), key=lambda kv: -kv[1]) if kv[1] / whole >= .005][:8]
     whole = float(sum(v for _, v in top)) or 1
-    x, bw = 476, 468
-    b.append('<clipPath id="bar"><rect x="476" y="114" width="%d" height="10" rx="5"/></clipPath><g clip-path="url(#bar)">' % bw)
+    x = lx
+    b.append('<clipPath id="bar"><rect x="%d" y="118" width="%d" height="12" rx="6"/></clipPath><g clip-path="url(#bar)">' % (lx, bw))
     for name, v in top:
         w = bw * v / whole
-        b.append('<rect x="%.1f" y="114" width="%.1f" height="10" fill="%s"/>' % (x, w + .5, colors[name]))
+        b.append('<rect x="%.1f" y="118" width="%.1f" height="12" fill="%s"/>' % (x, w + .5, colors[name]))
         x += w
     b.append("</g>")
     for i, (name, v) in enumerate(top):
-        cx, cy = 476 + (i % 2) * 240, 150 + (i // 2) * 24
-        b.append('<circle cx="%d" cy="%d" r="5" fill="%s"/><text x="%d" y="%d" font-size="12.5" fill="%s">%s <tspan fill="%s">%.1f%%</tspan></text>'
-                 % (cx + 5, cy - 4, colors[name], cx + 18, cy, TEXT, e(name), MUTED, 100 * v / whole))
+        cx, cy = lx + (i % 2) * 190, 162 + (i // 2) * 28
+        b.append('<circle cx="%d" cy="%d" r="6" fill="%s"/><text x="%d" y="%d" font-size="14" fill="%s">%s <tspan fill="%s">%.1f%%</tspan></text>'
+                 % (cx + 6, cy - 5, colors[name], cx + 20, cy, TEXT, e(name), MUTED, 100 * v / whole))
 
     return svg(W, H, "\n  ".join(b))
 
@@ -492,35 +504,34 @@ def stats(base, days, totals, colors):
 # ---------------------------------------------------------------- projects
 
 def projects(repo_map):
-    W, cw, ch, gap = 1000, 466, 168, 20
+    W, cw, ch, gap = 860, 404, 206, 20
     rows = math.ceil(len(PROJECTS) / 2)
-    H = 70 + rows * (ch + gap) + 10
-    b = ['<text x="30" y="42" font-size="15" font-weight="700"><tspan fill="%s">himanshu@github</tspan><tspan fill="%s">:~$ </tspan>'
+    H = 68 + rows * (ch + gap) + 4
+    b = ['<text x="22" y="42" font-size="17" font-weight="700"><tspan fill="%s">himanshu@github</tspan><tspan fill="%s">:~$ </tspan>'
          '<tspan fill="%s">./projects.sh --all</tspan><tspan class="cursor" fill="%s"> █</tspan></text>' % (MINT, MUTED, TEXT, CYAN)]
     for idx, (repo, title, desc, tags) in enumerate(PROJECTS):
         r = repo_map.get(repo, {})
-        x = 24 + (idx % 2) * (cw + gap)
-        y = 66 + (idx // 2) * (ch + gap)
-        delay = .15 * idx
-        g = ['<g class="reveal" style="animation-delay:%.2fs">' % delay]
+        x = 16 + (idx % 2) * (cw + gap)
+        y = 68 + (idx // 2) * (ch + gap)
+        g = ['<g class="reveal" style="animation-delay:%.2fs">' % (.15 * idx)]
         g.append('<rect x="%d" y="%d" width="%d" height="%d" rx="12" fill="%s" stroke="%s" stroke-opacity=".55"/>' % (x, y, cw, ch, PANEL, VIOLET))
-        g.append('<text x="%d" y="%d" font-size="10.5" fill="%s">%s/%s</text>' % (x + 18, y + 24, MUTED, USER, e(repo.lower())))
-        g.append('<circle class="pulse" cx="%d" cy="%d" r="4.5" fill="%s" filter="url(#softglow)"/>' % (x + cw - 20, y + 20, MINT))
-        g.append('<text x="%d" y="%d" font-size="19" font-weight="800" fill="%s">%s<tspan fill="%s" class="cursor">_</tspan></text>' % (x + 18, y + 52, TEXT, e(title), CYAN))
+        g.append('<text x="%d" y="%d" font-size="12" fill="%s">%s/%s</text>' % (x + 18, y + 26, MUTED, USER, e(repo.lower())))
+        g.append('<circle class="pulse" cx="%d" cy="%d" r="5" fill="%s" filter="url(#softglow)"/>' % (x + cw - 20, y + 22, MINT))
+        g.append('<text x="%d" y="%d" font-size="22" font-weight="800" fill="%s">%s<tspan fill="%s" class="cursor">_</tspan></text>' % (x + 18, y + 58, TEXT, e(title), CYAN))
         for i, line in enumerate(desc):
-            g.append('<text x="%d" y="%d" font-size="11" fill="%s">%s</text>' % (x + 18, y + 74 + i * 15, "#a5abd6", e(line)))
+            g.append('<text x="%d" y="%d" font-size="13" fill="%s">%s</text>' % (x + 18, y + 84 + i * 18, "#a5abd6", e(line)))
         tx = x + 18
         for t in tags:
-            tw = 7.2 * len(t) + 18
-            g.append('<rect x="%d" y="%d" width="%.0f" height="20" rx="10" fill="#2a1250" stroke="%s"/>' % (tx, y + 110, tw, VIOLET))
-            g.append('<text x="%.0f" y="%d" text-anchor="middle" font-size="10.5" fill="#e9d5ff">%s</text>' % (tx + tw / 2, y + 124, e(t)))
-            tx += tw + 7
+            tw = 7.6 * len(t) + 20
+            g.append('<rect x="%d" y="%d" width="%.0f" height="24" rx="12" fill="#2a1250" stroke="%s"/>' % (tx, y + 122, tw, VIOLET))
+            g.append('<text x="%.0f" y="%d" text-anchor="middle" font-size="12" fill="#e9d5ff">%s</text>' % (tx + tw / 2, y + 138, e(t)))
+            tx += tw + 8
         meta = "★ %d · updated %s" % (r.get("stargazerCount", 0), ago(r["pushedAt"]) if r.get("pushedAt") else "-")
-        g.append('<text x="%d" y="%d" font-size="10.5" fill="%s">%s</text>' % (x + 18, y + 152, MUTED, e(meta)))
+        g.append('<text x="%d" y="%d" font-size="12" fill="%s">%s</text>' % (x + 18, y + 186, MUTED, e(meta)))
 
         langs = [(ed["node"]["name"], ed["size"], ed["node"]["color"] or MUTED) for ed in r.get("languages", {}).get("edges", [])]
         whole = float(sum(s for _, s, _ in langs)) or 1
-        cx, cy, rad = x + cw - 64, y + 66, 28
+        cx, cy, rad = x + cw - 48, y + 166, 24
         if langs:
             circ, off = 2 * math.pi * rad, 0
             g.append('<circle cx="%d" cy="%d" r="%d" fill="none" stroke="#23235a" stroke-width="7"/>' % (cx, cy, rad))
@@ -533,9 +544,9 @@ def projects(repo_map):
                      % (cx, cy + 4, TEXT, round(100 * langs[0][1] / whole)))
             shown = [l for l in langs if round(100 * l[1] / whole) >= 1][:3]
             for i, (name, s, col) in enumerate(shown):
-                ly = y + 112 + i * 14
-                g.append('<circle cx="%d" cy="%d" r="3.5" fill="%s"/><text x="%d" y="%d" font-size="10" fill="%s">%s %d%%</text>'
-                         % (x + cw - 118, ly, col, x + cw - 110, ly + 4, "#c4c9ee", e(name), round(100 * s / whole)))
+                ly = y + 160 + i * 16
+                g.append('<circle cx="%d" cy="%d" r="4" fill="%s"/><text x="%d" y="%d" font-size="11.5" fill="%s">%s %d%%</text>'
+                         % (x + cw - 196, ly, col, x + cw - 187, ly + 4, "#c4c9ee", e(name), round(100 * s / whole)))
         g.append("</g>")
         b.append("".join(g))
     return svg(W, H, "\n  ".join(b))
