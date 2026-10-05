@@ -25,7 +25,6 @@ PORTRAIT = ASSETS / "avatar.jpg"
 
 FONT = "'JetBrains Mono','Fira Code','SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace"
 # Calm midnight palette: soft pastels on a slate-indigo base, easy on the eyes.
-BG = "#0d1020"
 PANEL = "url(#panel)"
 CYAN = "#8ecdf0"
 PINK = "#eba7c8"
@@ -185,9 +184,6 @@ def defs():
       <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
       <animateTransform attributeName="gradientTransform" type="translate" values="0 0;1300 0;1300 0" keyTimes="0;.6;1" dur="8s" repeatCount="indefinite"/>
     </linearGradient>
-    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
-      <path d="M28 0H0V28" fill="none" stroke="#171b36" stroke-width=".6"/>
-    </pattern>
   </defs>""" % (CYAN, VIOLET, PINK)
 
 
@@ -201,13 +197,13 @@ def svg(w, h, body, style=""):
     .reveal { animation: fadeUp .5s ease-out both; }
     .cursor { animation: blink 1s steps(1) infinite; }
     .pulse { animation: pulse 2.4s ease-in-out infinite; }
+    /* Transparent canvas: keep text outside the panels readable on light pages. */
+    @media (prefers-color-scheme: light) { .hdr { fill: #1f2340; } .hdr-ext { fill: #3b82c4; } }
     %s
   </style>%s
-  <rect width="100%%" height="100%%" rx="16" fill="%s"/>
-  <rect width="100%%" height="100%%" rx="16" fill="url(#grid)" opacity=".4"/>
 %s
 </svg>
-""" % (w, h, w, h, e(FONT), FONT, style, defs(), BG, body)
+""" % (w, h, w, h, e(FONT), FONT, style, defs(), body)
 
 
 def window(x, y, w, h, title_right=""):
@@ -369,7 +365,7 @@ def ring(cx, cy, r, pct, label, sub=None, color="url(#neon)", width=7, size=15):
 
 def hero(total, current, longest, first_day, cur_range):
     W = 860
-    b = ['<text x="24" y="36" font-size="17" font-weight="800" fill="%s">%s <tspan fill="%s">/</tspan> README<tspan fill="%s">.md</tspan></text>'
+    b = ['<text class="hdr" x="24" y="36" font-size="17" font-weight="800" fill="%s">%s <tspan fill="%s">/</tspan> README<tspan class="hdr-ext" fill="%s">.md</tspan></text>'
          % (TEXT, USER, MUTED, CYAN)]
 
     # System info (laid out first: its length sets the window height)

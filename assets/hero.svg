@@ -7,6 +7,8 @@
     .reveal { animation: fadeUp .5s ease-out both; }
     .cursor { animation: blink 1s steps(1) infinite; }
     .pulse { animation: pulse 2.4s ease-in-out infinite; }
+    /* Transparent canvas: keep text outside the panels readable on light pages. */
+    @media (prefers-color-scheme: light) { .hdr { fill: #1f2340; } .hdr-ext { fill: #3b82c4; } }
     
     @keyframes scan { from { transform: translateY(0); } to { transform: translateY(416px); } }
     .scan { animation: scan 3.2s linear infinite; }
@@ -33,13 +35,8 @@
       <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
       <animateTransform attributeName="gradientTransform" type="translate" values="0 0;1300 0;1300 0" keyTimes="0;.6;1" dur="8s" repeatCount="indefinite"/>
     </linearGradient>
-    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
-      <path d="M28 0H0V28" fill="none" stroke="#171b36" stroke-width=".6"/>
-    </pattern>
   </defs>
-  <rect width="100%" height="100%" rx="16" fill="#0d1020"/>
-  <rect width="100%" height="100%" rx="16" fill="url(#grid)" opacity=".4"/>
-<text x="24" y="36" font-size="17" font-weight="800" fill="#dfe3f5">himanshu-gupta15 <tspan fill="#8a90b8">/</tspan> README<tspan fill="#8ecdf0">.md</tspan></text>
+<text class="hdr" x="24" y="36" font-size="17" font-weight="800" fill="#dfe3f5">himanshu-gupta15 <tspan fill="#8a90b8">/</tspan> README<tspan class="hdr-ext" fill="#8ecdf0">.md</tspan></text>
   
   <rect x="16" y="56" width="828" height="514" rx="14" fill="url(#panel)" stroke="#8ecdf0" stroke-width="2" filter="url(#glow)" opacity=".3"/>
   <rect x="16" y="56" width="828" height="514" rx="14" fill="url(#panel)" stroke="#8ecdf0" stroke-opacity=".5" stroke-width="1.2"/>
@@ -82,10 +79,10 @@
   <text x="143" y="648" text-anchor="middle" font-size="40" font-weight="800" fill="#dfe3f5" filter="url(#softglow)">677</text>
   <text x="143" y="676" text-anchor="middle" font-size="15" fill="#8ecdf0">Total Contributions</text>
   <text x="143" y="696" text-anchor="middle" font-size="12" fill="#8a90b8">Jan 21, 2025 - Present</text>
-  <circle cx="430" cy="636" r="31" fill="none" stroke="#262b4d" stroke-width="7"/><circle cx="430" cy="636" r="31" fill="none" stroke="url(#neon)" stroke-width="7" stroke-linecap="round" stroke-dasharray="13.0 194.8" transform="rotate(-90 430 636)" filter="url(#softglow)"><animate attributeName="stroke-dasharray" from="0 194.8" to="13.0 194.8" dur="1.6s" fill="freeze"/></circle><text x="430" y="643" text-anchor="middle" font-size="22" font-weight="800" fill="#dfe3f5">1</text>
+  <circle cx="430" cy="636" r="31" fill="none" stroke="#262b4d" stroke-width="7"/><circle cx="430" cy="636" r="31" fill="none" stroke="url(#neon)" stroke-width="7" stroke-linecap="round" stroke-dasharray="16.2 194.8" transform="rotate(-90 430 636)" filter="url(#softglow)"><animate attributeName="stroke-dasharray" from="0 194.8" to="16.2 194.8" dur="1.6s" fill="freeze"/></circle><text x="430" y="643" text-anchor="middle" font-size="22" font-weight="800" fill="#dfe3f5">1</text>
   <text x="430" y="694" text-anchor="middle" font-size="15" font-weight="700" fill="#eba7c8">Current Streak</text>
   <text x="430" y="712" text-anchor="middle" font-size="12" fill="#8a90b8">Oct 5 - Oct 5</text>
-  <text x="716" y="648" text-anchor="middle" font-size="40" font-weight="800" fill="#dfe3f5" filter="url(#softglow)">15</text>
+  <text x="716" y="648" text-anchor="middle" font-size="40" font-weight="800" fill="#dfe3f5" filter="url(#softglow)">12</text>
   <text x="716" y="676" text-anchor="middle" font-size="15" fill="#a99cf0">Longest Streak</text>
   <text x="716" y="696" text-anchor="middle" font-size="12" fill="#8a90b8">days in a row</text>
 </svg>
