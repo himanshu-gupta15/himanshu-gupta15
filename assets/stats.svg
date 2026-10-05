@@ -11,55 +11,65 @@
   </style>
   <defs>
     <linearGradient id="neon" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#22d3ee"/><stop offset=".5" stop-color="#a855f7"/><stop offset="1" stop-color="#f472b6"/>
+      <stop offset="0" stop-color="#8ecdf0"/><stop offset=".5" stop-color="#a99cf0"/><stop offset="1" stop-color="#eba7c8"/>
     </linearGradient>
     <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feGaussianBlur stdDeviation="3" result="b"/>
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
     <filter id="softglow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="1.6" result="b"/>
+      <feGaussianBlur stdDeviation="1.1" result="b"/>
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#181d3b"/><stop offset="1" stop-color="#10132a"/>
+    </linearGradient>
+    <linearGradient id="sheen" gradientUnits="userSpaceOnUse" x1="-360" y1="0" x2="0" y2="0">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset=".5" stop-color="#e8f4ff" stop-opacity="1"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+      <animateTransform attributeName="gradientTransform" type="translate" values="0 0;1300 0;1300 0" keyTimes="0;.6;1" dur="8s" repeatCount="indefinite"/>
+    </linearGradient>
     <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
-      <path d="M28 0H0V28" fill="none" stroke="#1b1b4a" stroke-width=".6"/>
+      <path d="M28 0H0V28" fill="none" stroke="#171b36" stroke-width=".6"/>
     </pattern>
   </defs>
-  <rect width="100%" height="100%" rx="16" fill="#05051a"/>
-  <rect width="100%" height="100%" rx="16" fill="url(#grid)" opacity=".55"/>
+  <rect width="100%" height="100%" rx="16" fill="#0d1020"/>
+  <rect width="100%" height="100%" rx="16" fill="url(#grid)" opacity=".4"/>
 
-  <rect x="16" y="16" width="828" height="288" rx="14" fill="#0a0a2e" stroke="#22d3ee" stroke-width="2" filter="url(#glow)" opacity=".95"/>
-  <rect x="16" y="16" width="828" height="288" rx="14" fill="#0a0a2e" stroke="#22d3ee" stroke-opacity=".9" stroke-width="1.4"/>
+  <rect x="16" y="16" width="828" height="288" rx="14" fill="url(#panel)" stroke="#8ecdf0" stroke-width="2" filter="url(#glow)" opacity=".3"/>
+  <rect x="16" y="16" width="828" height="288" rx="14" fill="url(#panel)" stroke="#8ecdf0" stroke-opacity=".5" stroke-width="1.2"/>
+  <rect x="16" y="16" width="828" height="288" rx="14" fill="none" stroke="url(#sheen)" stroke-width="2.2" filter="url(#softglow)"/>
   <circle cx="40" cy="38" r="6" fill="#ff5f57"/><circle cx="60" cy="38" r="6" fill="#febc2e"/><circle cx="80" cy="38" r="6" fill="#28c840"/>
-  <line x1="16" y1="60" x2="844" y2="60" stroke="#23235a"/>
-  <text x="822" y="42" text-anchor="end" font-size="12" fill="#e2e8f0" font-weight="700">~/stats --live</text>
-  <text x="40" y="98" font-size="17" font-weight="800" fill="#f472b6" filter="url(#softglow)">Himanshu's GitHub Stats</text>
-  <text class="reveal" style="animation-delay:0.20s" x="40" y="132" font-size="14.5"><tspan fill="#22d3ee">★</tspan><tspan fill="#e2e8f0" dx="8">Total Stars Earned:</tspan></text>
-  <text class="reveal" style="animation-delay:0.20s" x="404" y="132" text-anchor="end" font-size="15" font-weight="800" fill="#4ade80">8</text>
-  <text class="reveal" style="animation-delay:0.30s" x="40" y="160" font-size="14.5"><tspan fill="#22d3ee">◆</tspan><tspan fill="#e2e8f0" dx="8">Total Commits (last year):</tspan></text>
-  <text class="reveal" style="animation-delay:0.30s" x="404" y="160" text-anchor="end" font-size="15" font-weight="800" fill="#4ade80">561</text>
-  <text class="reveal" style="animation-delay:0.40s" x="40" y="188" font-size="14.5"><tspan fill="#22d3ee">⇄</tspan><tspan fill="#e2e8f0" dx="8">Total PRs:</tspan></text>
-  <text class="reveal" style="animation-delay:0.40s" x="404" y="188" text-anchor="end" font-size="15" font-weight="800" fill="#4ade80">12</text>
-  <text class="reveal" style="animation-delay:0.50s" x="40" y="216" font-size="14.5"><tspan fill="#22d3ee">!</tspan><tspan fill="#e2e8f0" dx="8">Total Issues:</tspan></text>
-  <text class="reveal" style="animation-delay:0.50s" x="404" y="216" text-anchor="end" font-size="15" font-weight="800" fill="#4ade80">0</text>
-  <text class="reveal" style="animation-delay:0.60s" x="40" y="244" font-size="14.5"><tspan fill="#22d3ee">⌘</tspan><tspan fill="#e2e8f0" dx="8">Public Repos:</tspan></text>
-  <text class="reveal" style="animation-delay:0.60s" x="404" y="244" text-anchor="end" font-size="15" font-weight="800" fill="#4ade80">25</text>
-  <text class="reveal" style="animation-delay:0.70s" x="40" y="272" font-size="14.5"><tspan fill="#22d3ee">◎</tspan><tspan fill="#e2e8f0" dx="8">Contributed to (last year):</tspan></text>
-  <text class="reveal" style="animation-delay:0.70s" x="404" y="272" text-anchor="end" font-size="15" font-weight="800" fill="#4ade80">1</text>
-  <line x1="428" y1="76" x2="428" y2="286" stroke="#23235a"/>
-  <text x="452" y="98" font-size="17" font-weight="800" fill="#22d3ee" filter="url(#softglow)">Most Used Languages</text>
+  <line x1="16" y1="60" x2="844" y2="60" stroke="#262b4d"/>
+  <text x="822" y="42" text-anchor="end" font-size="12" fill="#dfe3f5" font-weight="700">~/stats --live</text>
+  <text x="40" y="98" font-size="17" font-weight="800" fill="#eba7c8" filter="url(#softglow)">Himanshu's GitHub Stats</text>
+  <text class="reveal" style="animation-delay:0.20s" x="40" y="132" font-size="14.5"><tspan fill="#8ecdf0">★</tspan><tspan fill="#dfe3f5" dx="8">Total Stars Earned:</tspan></text>
+  <text class="reveal" style="animation-delay:0.20s" x="404" y="132" text-anchor="end" font-size="15" font-weight="800" fill="#93d9b4">8</text>
+  <text class="reveal" style="animation-delay:0.30s" x="40" y="160" font-size="14.5"><tspan fill="#8ecdf0">◆</tspan><tspan fill="#dfe3f5" dx="8">Total Commits (last year):</tspan></text>
+  <text class="reveal" style="animation-delay:0.30s" x="404" y="160" text-anchor="end" font-size="15" font-weight="800" fill="#93d9b4">561</text>
+  <text class="reveal" style="animation-delay:0.40s" x="40" y="188" font-size="14.5"><tspan fill="#8ecdf0">⇄</tspan><tspan fill="#dfe3f5" dx="8">Total PRs:</tspan></text>
+  <text class="reveal" style="animation-delay:0.40s" x="404" y="188" text-anchor="end" font-size="15" font-weight="800" fill="#93d9b4">12</text>
+  <text class="reveal" style="animation-delay:0.50s" x="40" y="216" font-size="14.5"><tspan fill="#8ecdf0">!</tspan><tspan fill="#dfe3f5" dx="8">Total Issues:</tspan></text>
+  <text class="reveal" style="animation-delay:0.50s" x="404" y="216" text-anchor="end" font-size="15" font-weight="800" fill="#93d9b4">0</text>
+  <text class="reveal" style="animation-delay:0.60s" x="40" y="244" font-size="14.5"><tspan fill="#8ecdf0">⌘</tspan><tspan fill="#dfe3f5" dx="8">Public Repos:</tspan></text>
+  <text class="reveal" style="animation-delay:0.60s" x="404" y="244" text-anchor="end" font-size="15" font-weight="800" fill="#93d9b4">32</text>
+  <text class="reveal" style="animation-delay:0.70s" x="40" y="272" font-size="14.5"><tspan fill="#8ecdf0">◎</tspan><tspan fill="#dfe3f5" dx="8">Contributed to (last year):</tspan></text>
+  <text class="reveal" style="animation-delay:0.70s" x="404" y="272" text-anchor="end" font-size="15" font-weight="800" fill="#93d9b4">3</text>
+  <line x1="428" y1="76" x2="428" y2="286" stroke="#262b4d"/>
+  <text x="452" y="98" font-size="17" font-weight="800" fill="#8ecdf0" filter="url(#softglow)">Most Used Languages</text>
   <clipPath id="bar"><rect x="452" y="118" width="372" height="12" rx="6"/></clipPath><g clip-path="url(#bar)">
-  <rect x="452.0" y="118" width="137.3" height="12" fill="#f1e05a"/>
-  <rect x="588.8" y="118" width="111.0" height="12" fill="#3178c6"/>
-  <rect x="699.3" y="118" width="68.8" height="12" fill="#3572A5"/>
-  <rect x="767.7" y="118" width="35.5" height="12" fill="#e34c26"/>
-  <rect x="802.6" y="118" width="16.7" height="12" fill="#f34b7d"/>
-  <rect x="818.9" y="118" width="5.6" height="12" fill="#663399"/>
+  <rect x="452.0" y="118" width="151.0" height="12" fill="#d3ca80"/>
+  <rect x="602.5" y="118" width="88.1" height="12" fill="#5686c7"/>
+  <rect x="690.1" y="118" width="73.9" height="12" fill="#5882b1"/>
+  <rect x="763.5" y="118" width="38.5" height="12" fill="#c9695f"/>
+  <rect x="801.6" y="118" width="13.5" height="12" fill="#d46997"/>
+  <rect x="814.5" y="118" width="10.0" height="12" fill="#7859a9"/>
   </g>
-  <circle cx="458" cy="157" r="6" fill="#f1e05a"/><text x="472" y="162" font-size="14" fill="#e2e8f0">JavaScript <tspan fill="#7c83b0">36.8%</tspan></text>
-  <circle cx="648" cy="157" r="6" fill="#3178c6"/><text x="662" y="162" font-size="14" fill="#e2e8f0">TypeScript <tspan fill="#7c83b0">29.7%</tspan></text>
-  <circle cx="458" cy="185" r="6" fill="#3572A5"/><text x="472" y="190" font-size="14" fill="#e2e8f0">Python <tspan fill="#7c83b0">18.4%</tspan></text>
-  <circle cx="648" cy="185" r="6" fill="#e34c26"/><text x="662" y="190" font-size="14" fill="#e2e8f0">HTML <tspan fill="#7c83b0">9.4%</tspan></text>
-  <circle cx="458" cy="213" r="6" fill="#f34b7d"/><text x="472" y="218" font-size="14" fill="#e2e8f0">C++ <tspan fill="#7c83b0">4.4%</tspan></text>
-  <circle cx="648" cy="213" r="6" fill="#663399"/><text x="662" y="218" font-size="14" fill="#e2e8f0">CSS <tspan fill="#7c83b0">1.4%</tspan></text>
+  <circle cx="458" cy="157" r="6" fill="#d3ca80"/><text x="472" y="162" font-size="14" fill="#dfe3f5">JavaScript <tspan fill="#8a90b8">40.5%</tspan></text>
+  <circle cx="648" cy="157" r="6" fill="#5686c7"/><text x="662" y="162" font-size="14" fill="#dfe3f5">TypeScript <tspan fill="#8a90b8">23.6%</tspan></text>
+  <circle cx="458" cy="185" r="6" fill="#5882b1"/><text x="472" y="190" font-size="14" fill="#dfe3f5">Python <tspan fill="#8a90b8">19.7%</tspan></text>
+  <circle cx="648" cy="185" r="6" fill="#c9695f"/><text x="662" y="190" font-size="14" fill="#dfe3f5">HTML <tspan fill="#8a90b8">10.2%</tspan></text>
+  <circle cx="458" cy="213" r="6" fill="#d46997"/><text x="472" y="218" font-size="14" fill="#dfe3f5">C++ <tspan fill="#8a90b8">3.5%</tspan></text>
+  <circle cx="648" cy="213" r="6" fill="#7859a9"/><text x="662" y="218" font-size="14" fill="#dfe3f5">CSS <tspan fill="#8a90b8">2.5%</tspan></text>
 </svg>

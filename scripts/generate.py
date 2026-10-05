@@ -25,14 +25,17 @@ ASSETS = ROOT / "assets"
 PORTRAIT = ASSETS / "avatar.jpg"
 
 FONT = "'JetBrains Mono','Fira Code','SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace"
-BG = "#05051a"
-PANEL = "#0a0a2e"
-CYAN = "#22d3ee"
-PINK = "#f472b6"
-VIOLET = "#a855f7"
-MINT = "#4ade80"
-TEXT = "#e2e8f0"
-MUTED = "#7c83b0"
+# Calm midnight palette: soft pastels on a slate-indigo base, easy on the eyes.
+BG = "#0d1020"
+PANEL = "url(#panel)"
+CYAN = "#8ecdf0"
+PINK = "#eba7c8"
+VIOLET = "#a99cf0"
+MINT = "#93d9b4"
+TEXT = "#dfe3f5"
+MUTED = "#8a90b8"
+LINE = "#262b4d"
+FAINT = "#565b8a"
 
 PROFILE = [
     ("Subject", "Himanshu Gupta"),
@@ -173,7 +176,7 @@ def lang_totals(repos):
         for e in edges:
             name = e["node"]["name"]
             totals[name] = totals.get(name, 0) + e["size"] / size
-            colors[name] = e["node"]["color"] or MUTED
+            colors[name] = soften(e["node"]["color"] or MUTED)
     return totals, colors
 
 
@@ -199,15 +202,24 @@ def defs():
       <stop offset="0" stop-color="%s"/><stop offset=".5" stop-color="%s"/><stop offset="1" stop-color="%s"/>
     </linearGradient>
     <filter id="glow" x="-20%%" y="-20%%" width="140%%" height="140%%">
-      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feGaussianBlur stdDeviation="3" result="b"/>
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
     <filter id="softglow" x="-50%%" y="-50%%" width="200%%" height="200%%">
-      <feGaussianBlur stdDeviation="1.6" result="b"/>
+      <feGaussianBlur stdDeviation="1.1" result="b"/>
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#181d3b"/><stop offset="1" stop-color="#10132a"/>
+    </linearGradient>
+    <linearGradient id="sheen" gradientUnits="userSpaceOnUse" x1="-360" y1="0" x2="0" y2="0">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset=".5" stop-color="#e8f4ff" stop-opacity="1"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+      <animateTransform attributeName="gradientTransform" type="translate" values="0 0;1300 0;1300 0" keyTimes="0;.6;1" dur="8s" repeatCount="indefinite"/>
+    </linearGradient>
     <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
-      <path d="M28 0H0V28" fill="none" stroke="#1b1b4a" stroke-width=".6"/>
+      <path d="M28 0H0V28" fill="none" stroke="#171b36" stroke-width=".6"/>
     </pattern>
   </defs>""" % (CYAN, VIOLET, PINK)
 
@@ -225,7 +237,7 @@ def svg(w, h, body, style=""):
     %s
   </style>%s
   <rect width="100%%" height="100%%" rx="16" fill="%s"/>
-  <rect width="100%%" height="100%%" rx="16" fill="url(#grid)" opacity=".55"/>
+  <rect width="100%%" height="100%%" rx="16" fill="url(#grid)" opacity=".4"/>
 %s
 </svg>
 """ % (w, h, w, h, e(FONT), FONT, style, defs(), BG, body)
@@ -233,15 +245,17 @@ def svg(w, h, body, style=""):
 
 def window(x, y, w, h, title_right=""):
     return """
-  <rect x="%d" y="%d" width="%d" height="%d" rx="14" fill="%s" stroke="%s" stroke-width="2" filter="url(#glow)" opacity=".95"/>
-  <rect x="%d" y="%d" width="%d" height="%d" rx="14" fill="%s" stroke="%s" stroke-opacity=".9" stroke-width="1.4"/>
+  <rect x="%d" y="%d" width="%d" height="%d" rx="14" fill="%s" stroke="%s" stroke-width="2" filter="url(#glow)" opacity=".3"/>
+  <rect x="%d" y="%d" width="%d" height="%d" rx="14" fill="%s" stroke="%s" stroke-opacity=".5" stroke-width="1.2"/>
+  <rect x="%d" y="%d" width="%d" height="%d" rx="14" fill="none" stroke="url(#sheen)" stroke-width="2.2" filter="url(#softglow)"/>
   <circle cx="%d" cy="%d" r="6" fill="#ff5f57"/><circle cx="%d" cy="%d" r="6" fill="#febc2e"/><circle cx="%d" cy="%d" r="6" fill="#28c840"/>
-  <line x1="%d" y1="%d" x2="%d" y2="%d" stroke="#23235a"/>
+  <line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s"/>
   <text x="%d" y="%d" text-anchor="end" font-size="12" fill="%s" font-weight="700">%s</text>""" % (
         x, y, w, h, PANEL, CYAN,
         x, y, w, h, PANEL, CYAN,
+        x, y, w, h,
         x + 24, y + 22, x + 44, y + 22, x + 64, y + 22,
-        x, y + 44, x + w, y + 44,
+        x, y + 44, x + w, y + 44, LINE,
         x + w - 22, y + 26, TEXT, e(title_right))
 
 
@@ -249,6 +263,10 @@ def brackets(x, y, w, h, n=14, color=CYAN):
     p = "M{0} {1}v-{n}h{n} M{2} {1}v-{n}h-{n} M{0} {3}v{n}h{n} M{2} {3}v{n}h-{n}"
     d = p.format(x, y + n, x + w, y + h - n, n=n)
     return '<path d="%s" fill="none" stroke="%s" stroke-width="2"/>' % (d, color)
+
+
+def soften(c):
+    return lerp_color(c, "#9aa0c8", .35)
 
 
 def lerp_color(a, b, t):
@@ -325,7 +343,7 @@ def duotone_uri(size):
     import base64
     import io
     img = ImageOps.colorize(portrait_image().resize((size, size), Image.LANCZOS),
-                            black="#07061f", mid="#8b3fd9", white="#f5d0fe", midpoint=110)
+                            black="#0b0d1f", mid="#7867c9", white="#e8e1fb", midpoint=110)
     buf = io.BytesIO()
     img.save(buf, "JPEG", quality=78)
     return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode()
@@ -344,7 +362,7 @@ def morph(x, y, w, h, n=700, cycle=16):
         times += ["%.4g" % ((i * (hold + move)) + hold), "%.4g" % ((i + 1) * (hold + move))]
         ease += ["0 0 1 1", ".7 0 .2 1"]
     kt, ks = ";".join(times), ";".join(ease)
-    palette = ["#f0abfc", "#e9a8ff", "#c4b5fd", "#f9a8d4", "#d8b4fe"]
+    palette = ["#e9c3f2", "#cfc6f8", "#bfd4f5", "#efc0d8", "#d6cbf6"]
     out = ['<image href="%s" x="%d" y="%d" width="%d" height="%d" opacity="0">'
            '<animate attributeName="opacity" dur="%ds" repeatCount="indefinite" keyTimes="0;.80;.85;.92;.95;1" values="0;0;.95;.95;0;0"/></image>'
            % (duotone_uri(320), x, y, w, h, cycle)]
@@ -366,7 +384,7 @@ def morph(x, y, w, h, n=700, cycle=16):
 
 def ring(cx, cy, r, pct, label, sub=None, color="url(#neon)", width=7, size=15):
     c = 2 * math.pi * r
-    out = ['<circle cx="%d" cy="%d" r="%d" fill="none" stroke="#23235a" stroke-width="%d"/>' % (cx, cy, r, width)]
+    out = ['<circle cx="%d" cy="%d" r="%d" fill="none" stroke="%s" stroke-width="%d"/>' % (cx, cy, r, LINE, width)]
     out.append(
         '<circle cx="%d" cy="%d" r="%d" fill="none" stroke="%s" stroke-width="%d" stroke-linecap="round" '
         'stroke-dasharray="%.1f %.1f" transform="rotate(-90 %d %d)" filter="url(#softglow)">'
@@ -407,7 +425,7 @@ def hero(total, current, longest, first_day, cur_range):
             key = (k + " ").ljust(15, ".")
             kc = MINT if k.startswith(("Core", "Grid")) else CYAN
             info.append('<text class="reveal" style="animation-delay:%.2fs" x="%d" y="%d" font-size="14">'
-                        '<tspan fill="%s" font-weight="700">%s</tspan><tspan fill="#3b3f74">%s</tspan>'
+                        '<tspan fill="%s" font-weight="700">%s</tspan><tspan fill="#3a3f66">%s</tspan>'
                         '<tspan fill="%s"> %s</tspan></text>'
                         % (delay, x0, y, kc, e(k), e(key[len(k):]), TEXT, e(v)))
         y += 19.5
@@ -424,19 +442,19 @@ def hero(total, current, longest, first_day, cur_range):
     side = bw - 16
     my = by + (bh - side) // 2
     b.append('<text x="%d" y="%d" font-size="11" letter-spacing="2" fill="%s">VISUAL.MAP</text>' % (bx + 2, by - 10, MUTED))
-    b.append('<rect x="%d" y="%d" width="%d" height="%d" rx="6" fill="#060622" stroke="#2a2a6a"/>' % (bx, by, bw, bh))
+    b.append('<rect x="%d" y="%d" width="%d" height="%d" rx="6" fill="#0b0e1f" stroke="#2b305a"/>' % (bx, by, bw, bh))
     b.append(brackets(bx, by, bw, bh))
-    b.append('<text x="%d" y="%d" font-size="11" fill="%s">[ x:0.42  y:0.17 ]</text>' % (bx + 14, by + 26, "#4b4f8a"))
+    b.append('<text x="%d" y="%d" font-size="11" fill="%s">[ x:0.42  y:0.17 ]</text>' % (bx + 14, by + 26, FAINT))
     b.append('<text x="%d" y="%d" font-size="11" fill="%s"><tspan class="pulse" fill="%s">●</tspan> rendering himanshu.exe</text>'
-             % (bx + 14, by + bh - 14, "#4b4f8a", PINK))
+             % (bx + 14, by + bh - 14, FAINT, PINK))
     b.append(morph(bx + 8, my, side, side))
-    b.append('<rect class="scan" x="%d" y="%d" width="%d" height="3" fill="%s" opacity=".35"/>' % (bx + 1, by + 1, bw - 2, CYAN))
+    b.append('<rect class="scan" x="%d" y="%d" width="%d" height="3" fill="%s" opacity=".16"/>' % (bx + 1, by + 1, bw - 2, CYAN))
     b += info
 
     # Streak row
     top = bottom + 18
     c1, c2, c3 = W // 6, W // 2, W * 5 // 6
-    b.append('<rect x="16" y="%d" width="%d" height="136" rx="14" fill="%s" stroke="#23235a"/>' % (top, W - 32, PANEL))
+    b.append('<rect x="16" y="%d" width="%d" height="136" rx="14" fill="%s" stroke="%s"/>' % (top, W - 32, PANEL, LINE))
     for xx in (W // 3, W * 2 // 3):
         b.append('<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-opacity=".5"/>' % (xx, top + 20, xx, top + 116, CYAN))
     b.append('<text x="%d" y="%d" text-anchor="middle" font-size="40" font-weight="800" fill="%s" filter="url(#softglow)">%s</text>' % (c1, top + 60, TEXT, "{:,}".format(total)))
@@ -481,7 +499,7 @@ def stats(base, days, totals, colors):
 
     # Languages
     lx, bw = 452, 372
-    b.append('<line x1="428" y1="76" x2="428" y2="286" stroke="#23235a"/>')
+    b.append('<line x1="428" y1="76" x2="428" y2="286" stroke="%s"/>' % LINE)
     b.append('<text x="%d" y="98" font-size="17" font-weight="800" fill="%s" filter="url(#softglow)">Most Used Languages</text>' % (lx, CYAN))
     whole = float(sum(totals.values())) or 1
     top = [kv for kv in sorted(totals.items(), key=lambda kv: -kv[1]) if kv[1] / whole >= .005][:8]
@@ -514,27 +532,28 @@ def projects(repo_map):
         x = 16 + (idx % 2) * (cw + gap)
         y = 68 + (idx // 2) * (ch + gap)
         g = ['<g class="reveal" style="animation-delay:%.2fs">' % (.15 * idx)]
-        g.append('<rect x="%d" y="%d" width="%d" height="%d" rx="12" fill="%s" stroke="%s" stroke-opacity=".55"/>' % (x, y, cw, ch, PANEL, VIOLET))
+        g.append('<rect x="%d" y="%d" width="%d" height="%d" rx="12" fill="%s" stroke="%s" stroke-opacity=".4"/>' % (x, y, cw, ch, PANEL, VIOLET))
+        g.append('<rect x="%d" y="%d" width="%d" height="%d" rx="12" fill="none" stroke="url(#sheen)" stroke-opacity=".8"/>' % (x, y, cw, ch))
         g.append('<text x="%d" y="%d" font-size="12" fill="%s">%s/%s</text>' % (x + 18, y + 26, MUTED, USER, e(repo.lower())))
-        g.append('<circle class="pulse" cx="%d" cy="%d" r="5" fill="%s" filter="url(#softglow)"/>' % (x + cw - 20, y + 22, MINT))
-        g.append('<text x="%d" y="%d" font-size="22" font-weight="800" fill="%s">%s<tspan fill="%s" class="cursor">_</tspan></text>' % (x + 18, y + 58, TEXT, e(title), CYAN))
+        g.append('<circle cx="%d" cy="%d" r="4.5" fill="%s" opacity=".85"/>' % (x + cw - 20, y + 22, MINT))
+        g.append('<text x="%d" y="%d" font-size="22" font-weight="800" fill="%s">%s<tspan fill="%s">_</tspan></text>' % (x + 18, y + 58, TEXT, e(title), CYAN))
         for i, line in enumerate(desc):
-            g.append('<text x="%d" y="%d" font-size="13" fill="%s">%s</text>' % (x + 18, y + 84 + i * 18, "#a5abd6", e(line)))
+            g.append('<text x="%d" y="%d" font-size="13" fill="%s">%s</text>' % (x + 18, y + 84 + i * 18, "#b3b8d9", e(line)))
         tx = x + 18
         for t in tags:
             tw = 7.6 * len(t) + 20
-            g.append('<rect x="%d" y="%d" width="%.0f" height="24" rx="12" fill="#2a1250" stroke="%s"/>' % (tx, y + 122, tw, VIOLET))
-            g.append('<text x="%.0f" y="%d" text-anchor="middle" font-size="12" fill="#e9d5ff">%s</text>' % (tx + tw / 2, y + 138, e(t)))
+            g.append('<rect x="%d" y="%d" width="%.0f" height="24" rx="12" fill="#1f2147" stroke="%s" stroke-opacity=".6"/>' % (tx, y + 122, tw, VIOLET))
+            g.append('<text x="%.0f" y="%d" text-anchor="middle" font-size="12" fill="#d9d3fb">%s</text>' % (tx + tw / 2, y + 138, e(t)))
             tx += tw + 8
         meta = "★ %d · updated %s" % (r.get("stargazerCount", 0), ago(r["pushedAt"]) if r.get("pushedAt") else "-")
         g.append('<text x="%d" y="%d" font-size="12" fill="%s">%s</text>' % (x + 18, y + 186, MUTED, e(meta)))
 
-        langs = [(ed["node"]["name"], ed["size"], ed["node"]["color"] or MUTED) for ed in r.get("languages", {}).get("edges", [])]
+        langs = [(ed["node"]["name"], ed["size"], soften(ed["node"]["color"] or MUTED)) for ed in r.get("languages", {}).get("edges", [])]
         whole = float(sum(s for _, s, _ in langs)) or 1
         cx, cy, rad = x + cw - 48, y + 166, 24
         if langs:
             circ, off = 2 * math.pi * rad, 0
-            g.append('<circle cx="%d" cy="%d" r="%d" fill="none" stroke="#23235a" stroke-width="7"/>' % (cx, cy, rad))
+            g.append('<circle cx="%d" cy="%d" r="%d" fill="none" stroke="%s" stroke-width="7"/>' % (cx, cy, rad, LINE))
             for name, s, col in langs[:4]:
                 seg = circ * s / whole
                 g.append('<circle cx="%d" cy="%d" r="%d" fill="none" stroke="%s" stroke-width="7" stroke-dasharray="%.1f %.1f" '
@@ -546,7 +565,7 @@ def projects(repo_map):
             for i, (name, s, col) in enumerate(shown):
                 ly = y + 160 + i * 16
                 g.append('<circle cx="%d" cy="%d" r="4" fill="%s"/><text x="%d" y="%d" font-size="11.5" fill="%s">%s %d%%</text>'
-                         % (x + cw - 196, ly, col, x + cw - 187, ly + 4, "#c4c9ee", e(name), round(100 * s / whole)))
+                         % (x + cw - 196, ly, col, x + cw - 187, ly + 4, "#c4c9e8", e(name), round(100 * s / whole)))
         g.append("</g>")
         b.append("".join(g))
     return svg(W, H, "\n  ".join(b))
