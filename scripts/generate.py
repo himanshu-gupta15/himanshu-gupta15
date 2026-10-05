@@ -2,7 +2,7 @@
 
 Pulls live data from the GitHub GraphQL API and writes:
   assets/hero.svg      window with dotted portrait + SYSTEM.INFO + streak row
-  assets/stats.svg     GitHub stats, top languages, contribution grid
+  assets/stats.svg     GitHub stats and top languages
   assets/projects.svg  ./projects.sh --all project cards
 
 Token: $GITHUB_TOKEN (Actions) or `gh auth token` locally.
@@ -256,29 +256,112 @@ def lerp_color(a, b, t):
     return "#%02x%02x%02x" % tuple(round(x + (y - x) * t) for x, y in zip(a, b))
 
 
-def portrait(x, y, w, h):
-    """Dot-matrix rendering of the avatar: dot size follows brightness."""
+def _stroke(rng, n, pts, thick):
+    """n points scattered along a polyline with some thickness (unit coords)."""
+    segs = list(zip(pts, pts[1:]))
+    lens = [math.hypot(b[0] - a[0], b[1] - a[1]) for a, b in segs]
+    out = []
+    for _ in range(n):
+        k = rng.choices(range(len(segs)), weights=lens)[0]
+        (ax, ay), (bx, by) = segs[k]
+        t = rng.random()
+        nx, ny = -(by - ay) / lens[k], (bx - ax) / lens[k]
+        o = rng.uniform(-thick, thick)
+        out.append((ax + (bx - ax) * t + nx * o, ay + (by - ay) * t + ny * o))
+    return out
+
+
+def shape_code(rng, n):
+    # </>
+    parts = [([(.30, .26), (.10, .50), (.30, .74)], .30),
+             ([(.70, .26), (.90, .50), (.70, .74)], .30),
+             ([(.58, .18), (.42, .82)], .40)]
+    out = []
+    for pts, share in parts:
+        out += _stroke(rng, int(n * share), pts, .035)
+    return (out + _stroke(rng, n - len(out), parts[2][0], .035))[:n]
+
+
+def shape_atom(rng, n):
+    out = []
+    for i in range(n):
+        if i < n * .1:
+            a, r = rng.uniform(0, 2 * math.pi), .07 * math.sqrt(rng.random())
+            out.append((.5 + r * math.cos(a), .5 + r * math.sin(a)))
+            continue
+        rot = math.radians(60 * (i % 3))
+        t = rng.uniform(0, 2 * math.pi)
+        ex, ey = .42 * math.cos(t), .16 * math.sin(t) + rng.uniform(-.012, .012)
+        out.append((.5 + ex * math.cos(rot) - ey * math.sin(rot), .5 + ex * math.sin(rot) + ey * math.cos(rot)))
+    return out
+
+
+def shape_triangle(rng, n):
+    a, b, c = (.5, .17), (.13, .80), (.87, .80)
+    out = []
+    for _ in range(n):
+        u, v = rng.random(), rng.random()
+        if u + v > 1:
+            u, v = 1 - u, 1 - v
+        out.append((a[0] + u * (b[0] - a[0]) + v * (c[0] - a[0]), a[1] + u * (b[1] - a[1]) + v * (c[1] - a[1])))
+    return out
+
+
+def portrait_image():
     img = Image.open(PORTRAIT).convert("L")
     side = min(img.size)
-    img = ImageOps.fit(img, (side, side), centering=(0.5, 0.0))
-    img = ImageOps.autocontrast(img, cutoff=2)
-    cols = 58
-    step = w / cols
-    rows = int(h / step)
-    small = img.resize((cols, rows), Image.LANCZOS)
-    dots = []
-    for j in range(rows):
-        t = j / max(rows - 1, 1)
-        color = lerp_color(PINK, VIOLET, t * 1.6) if t < .6 else lerp_color(VIOLET, CYAN, (t - .6) / .4)
-        for i in range(cols):
-            v = small.getpixel((i, j)) / 255
-            if v < .16:
-                continue
-            r = step * .5 * (v ** .8)
-            cls = ' class="tw"' if (i * 7 + j * 13) % 23 == 0 else ""
-            dots.append('<circle cx="%.1f" cy="%.1f" r="%.2f" fill="%s"%s/>' % (
-                x + i * step + step / 2, y + j * step + step / 2, r, color, cls))
-    return '<g filter="url(#softglow)">%s</g>' % "".join(dots)
+    return ImageOps.autocontrast(ImageOps.fit(img, (side, side), centering=(0.5, 0.0)), cutoff=2)
+
+
+def shape_portrait(rng, n):
+    img = portrait_image().resize((120, 120), Image.LANCZOS)
+    px = [(i, j, img.getpixel((i, j)) / 255) for j in range(120) for i in range(120)]
+    px = [p for p in px if p[2] > .2]
+    picks = rng.choices(px, weights=[p[2] ** 2 for p in px], k=n)
+    return [((i + rng.random()) / 120, (j + rng.random()) / 120) for i, j, _ in picks]
+
+
+def duotone_uri(size):
+    import base64
+    import io
+    img = ImageOps.colorize(portrait_image().resize((size, size), Image.LANCZOS),
+                            black="#07061f", mid="#8b3fd9", white="#f5d0fe", midpoint=110)
+    buf = io.BytesIO()
+    img.save(buf, "JPEG", quality=78)
+    return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode()
+
+
+def morph(x, y, w, h, n=700, cycle=16):
+    """Particles flying between shapes: </>, React atom, triangle, portrait."""
+    import random
+    rng = random.Random(7)  # deterministic, so the SVG only changes when data does
+    shapes = [shape_code(rng, n), shape_atom(rng, n), shape_triangle(rng, n), shape_portrait(rng, n)]
+    for sh in shapes:
+        rng.shuffle(sh)
+    hold, move = .1875, .0625  # per shape: 3s hold, 1s flight (16s cycle)
+    times, ease = ["0"], []
+    for i in range(len(shapes)):
+        times += ["%.4g" % ((i * (hold + move)) + hold), "%.4g" % ((i + 1) * (hold + move))]
+        ease += ["0 0 1 1", ".7 0 .2 1"]
+    kt, ks = ";".join(times), ";".join(ease)
+    palette = ["#f0abfc", "#e9a8ff", "#c4b5fd", "#f9a8d4", "#d8b4fe"]
+    out = ['<image href="%s" x="%d" y="%d" width="%d" height="%d" opacity="0">'
+           '<animate attributeName="opacity" dur="%ds" repeatCount="indefinite" keyTimes="0;.80;.85;.92;.95;1" values="0;0;.95;.95;0;0"/></image>'
+           % (duotone_uri(320), x, y, w, h, cycle)]
+    out.append('<g filter="url(#softglow)"><animate attributeName="opacity" dur="%ds" repeatCount="indefinite" '
+               'keyTimes="0;.80;.85;.92;.95;1" values="1;1;.18;.18;1;1"/>' % cycle)
+    anim = '<animate attributeName="%s" dur="%ds" repeatCount="indefinite" calcMode="spline" keyTimes="%s" keySplines="%s" values="%s"/>'
+    for k in range(n):
+        xs = ["%d" % (x + sh[k][0] * w) for sh in shapes]
+        ys = ["%d" % (y + sh[k][1] * h) for sh in shapes]
+        # Each shape holds, then flies to the next: s0 s0 s1 s1 s2 s2 s3 s3 s0
+        vx = [xs[0], xs[0], xs[1], xs[1], xs[2], xs[2], xs[3], xs[3], xs[0]]
+        vy = [ys[0], ys[0], ys[1], ys[1], ys[2], ys[2], ys[3], ys[3], ys[0]]
+        out.append('<circle cx="%s" cy="%s" r="%.1f" fill="%s">%s%s</circle>' % (
+            xs[0], ys[0], 1.2 + (k % 3) * .35, palette[k % len(palette)],
+            anim % ("cx", cycle, kt, ks, ";".join(vx)), anim % ("cy", cycle, kt, ks, ";".join(vy))))
+    out.append("</g>")
+    return "".join(out)
 
 
 def ring(cx, cy, r, pct, label, sub=None, color="url(#neon)", width=7, size=15):
@@ -309,7 +392,7 @@ def hero(total, current, longest, first_day, cur_range):
     b.append('<text x="56" y="126" font-size="10" letter-spacing="2" fill="%s">VISUAL.MAP</text>' % MUTED)
     b.append('<rect x="52" y="136" width="352" height="356" rx="6" fill="#060622" stroke="#2a2a6a"/>')
     b.append(brackets(52, 136, 352, 356))
-    b.append(portrait(62, 160, 332, 326))
+    b.append(morph(62, 146, 332, 340))
     b.append('<rect class="scan" x="53" y="137" width="350" height="3" fill="%s" opacity=".35"/>' % CYAN)
 
     # System info
@@ -358,8 +441,6 @@ def hero(total, current, longest, first_day, cur_range):
     style = """
     @keyframes scan { from { transform: translateY(0); } to { transform: translateY(352px); } }
     .scan { animation: scan 3.2s linear infinite; }
-    @keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: .15; } }
-    .tw { animation: twinkle 2.2s ease-in-out infinite; }
     """
     return svg(W, H, "\n  ".join(b), style)
 
@@ -367,7 +448,7 @@ def hero(total, current, longest, first_day, cur_range):
 # ---------------------------------------------------------------- stats
 
 def stats(base, days, totals, colors):
-    W, H = 1000, 470
+    W, H = 1000, 290
     cc = base["contributionsCollection"]
     repos = base["repositories"]["nodes"]
     rows = [
@@ -378,7 +459,7 @@ def stats(base, days, totals, colors):
         ("⌘", "Public Repos", base["repositories"]["totalCount"]),
         ("◎", "Contributed to (last year)", base["repositoriesContributedTo"]["totalCount"]),
     ]
-    b = [window(24, 20, 952, 430, "~/stats --live")]
+    b = [window(24, 20, 952, 250, "~/stats --live")]
     b.append('<text x="56" y="96" font-size="15" font-weight="800" fill="%s" filter="url(#softglow)">Himanshu\'s GitHub Stats</text>' % PINK)
     for i, (icon, label, val) in enumerate(rows):
         y = 126 + i * 23
@@ -405,28 +486,6 @@ def stats(base, days, totals, colors):
         b.append('<circle cx="%d" cy="%d" r="5" fill="%s"/><text x="%d" y="%d" font-size="12.5" fill="%s">%s <tspan fill="%s">%.1f%%</tspan></text>'
                  % (cx + 5, cy - 4, colors[name], cx + 18, cy, TEXT, e(name), MUTED, 100 * v / whole))
 
-    # Contribution grid, last 53 weeks
-    today = dt.date.today()
-    start = today - dt.timedelta(days=today.weekday() + 1 + 52 * 7)  # a Sunday
-    peak = max([days.get((start + dt.timedelta(d)).isoformat(), 0) for d in range((today - start).days + 1)] + [1])
-    palette = ["#16163d", "#3b1d6e", "#6d28d9", "#a855f7", "#f0abfc"]
-    cell, gap, gx, gy = 13, 3.4, 56, 292
-    b.append('<text x="56" y="%d" font-size="11" letter-spacing="2" fill="%s">CONTRIBUTION.GRID // last 12 months</text>' % (gy - 10, MUTED))
-    d, n = start, 0
-    while d <= today:
-        week, dow = (d - start).days // 7, (d.weekday() + 1) % 7
-        c = days.get(d.isoformat(), 0)
-        lvl = 0 if c == 0 else min(4, 1 + int(3 * c / peak))
-        cls = ' class="pulse" style="animation-delay:%.1fs"' % ((week * 7 + dow) % 17 * .15) if lvl >= 3 else ""
-        b.append('<rect x="%.1f" y="%.1f" width="%d" height="%d" rx="3" fill="%s"%s/>'
-                 % (gx + week * (cell + gap), gy + dow * (cell + gap), cell, cell, palette[lvl], cls))
-        d += dt.timedelta(1)
-        n += 1
-    lx = gx + 53 * (cell + gap) - 5 * (cell + gap) - 70
-    b.append('<text x="%d" y="%d" font-size="10" fill="%s">less</text>' % (lx, gy + 7 * (cell + gap) + 14, MUTED))
-    for i, col in enumerate(palette):
-        b.append('<rect x="%d" y="%d" width="11" height="11" rx="2" fill="%s"/>' % (lx + 32 + i * 15, gy + 7 * (cell + gap) + 4, col))
-    b.append('<text x="%d" y="%d" font-size="10" fill="%s">more</text>' % (lx + 32 + 5 * 15 + 4, gy + 7 * (cell + gap) + 14, MUTED))
     return svg(W, H, "\n  ".join(b))
 
 

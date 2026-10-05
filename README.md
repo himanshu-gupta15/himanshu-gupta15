@@ -21,7 +21,11 @@
 </p>
 
 <p align="center">
-  <img src="assets/stats.svg" width="100%" alt="GitHub stats, most used languages and contribution grid" />
+  <img src="assets/stats.svg" width="100%" alt="GitHub stats and most used languages" />
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/himanshu-gupta15/himanshu-gupta15/output/github-contribution-grid-snake-neon.svg" width="100%" alt="Contribution grid with a snake eating contributions" />
 </p>
 
 <p align="center">
@@ -56,6 +60,13 @@
   <a href="https://leetcode.com/u/himanshu8083/">
     <img src="https://leetcard.jacoblin.cool/himanshu8083?theme=dark&font=JetBrains%20Mono&ext=heatmap&border=0&radius=12" alt="LeetCode stats" />
   </a>
+</p>
+
+<p align="center">
+  <a href="https://linkedin.com/in/himanshu-gupta27"><code>◉ LINKEDIN</code></a>&nbsp;&nbsp;
+  <a href="https://portfoliohimanshugupta.netlify.app"><code>◉ PORTFOLIO</code></a>&nbsp;&nbsp;
+  <a href="https://leetcode.com/u/himanshu8083/"><code>◉ LEETCODE</code></a>&nbsp;&nbsp;
+  <a href="mailto:himanshugpt0005@gmail.com"><code>✉ EMAIL</code></a>
 </p>
 
 <p align="center"><code>himanshu@github:~$ exit_</code></p>
