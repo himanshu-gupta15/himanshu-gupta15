@@ -37,29 +37,29 @@
   <text class="reveal" style="animation-delay:0.20s" x="40" y="132" font-size="14.5"><tspan fill="#22d3ee">★</tspan><tspan fill="#e2e8f0" dx="8">Total Stars Earned:</tspan></text>
   <text class="reveal" style="animation-delay:0.20s" x="404" y="132" text-anchor="end" font-size="15" font-weight="800" fill="#4ade80">8</text>
   <text class="reveal" style="animation-delay:0.30s" x="40" y="160" font-size="14.5"><tspan fill="#22d3ee">◆</tspan><tspan fill="#e2e8f0" dx="8">Total Commits (last year):</tspan></text>
-  <text class="reveal" style="animation-delay:0.30s" x="404" y="160" text-anchor="end" font-size="15" font-weight="800" fill="#4ade80">560</text>
+  <text class="reveal" style="animation-delay:0.30s" x="404" y="160" text-anchor="end" font-size="15" font-weight="800" fill="#4ade80">561</text>
   <text class="reveal" style="animation-delay:0.40s" x="40" y="188" font-size="14.5"><tspan fill="#22d3ee">⇄</tspan><tspan fill="#e2e8f0" dx="8">Total PRs:</tspan></text>
   <text class="reveal" style="animation-delay:0.40s" x="404" y="188" text-anchor="end" font-size="15" font-weight="800" fill="#4ade80">12</text>
   <text class="reveal" style="animation-delay:0.50s" x="40" y="216" font-size="14.5"><tspan fill="#22d3ee">!</tspan><tspan fill="#e2e8f0" dx="8">Total Issues:</tspan></text>
   <text class="reveal" style="animation-delay:0.50s" x="404" y="216" text-anchor="end" font-size="15" font-weight="800" fill="#4ade80">0</text>
   <text class="reveal" style="animation-delay:0.60s" x="40" y="244" font-size="14.5"><tspan fill="#22d3ee">⌘</tspan><tspan fill="#e2e8f0" dx="8">Public Repos:</tspan></text>
-  <text class="reveal" style="animation-delay:0.60s" x="404" y="244" text-anchor="end" font-size="15" font-weight="800" fill="#4ade80">32</text>
+  <text class="reveal" style="animation-delay:0.60s" x="404" y="244" text-anchor="end" font-size="15" font-weight="800" fill="#4ade80">25</text>
   <text class="reveal" style="animation-delay:0.70s" x="40" y="272" font-size="14.5"><tspan fill="#22d3ee">◎</tspan><tspan fill="#e2e8f0" dx="8">Contributed to (last year):</tspan></text>
-  <text class="reveal" style="animation-delay:0.70s" x="404" y="272" text-anchor="end" font-size="15" font-weight="800" fill="#4ade80">3</text>
+  <text class="reveal" style="animation-delay:0.70s" x="404" y="272" text-anchor="end" font-size="15" font-weight="800" fill="#4ade80">1</text>
   <line x1="428" y1="76" x2="428" y2="286" stroke="#23235a"/>
   <text x="452" y="98" font-size="17" font-weight="800" fill="#22d3ee" filter="url(#softglow)">Most Used Languages</text>
   <clipPath id="bar"><rect x="452" y="118" width="372" height="12" rx="6"/></clipPath><g clip-path="url(#bar)">
-  <rect x="452.0" y="118" width="151.0" height="12" fill="#f1e05a"/>
-  <rect x="602.5" y="118" width="88.1" height="12" fill="#3178c6"/>
-  <rect x="690.1" y="118" width="73.9" height="12" fill="#3572A5"/>
-  <rect x="763.5" y="118" width="38.5" height="12" fill="#e34c26"/>
-  <rect x="801.6" y="118" width="13.5" height="12" fill="#f34b7d"/>
-  <rect x="814.5" y="118" width="10.0" height="12" fill="#663399"/>
+  <rect x="452.0" y="118" width="137.3" height="12" fill="#f1e05a"/>
+  <rect x="588.8" y="118" width="111.0" height="12" fill="#3178c6"/>
+  <rect x="699.3" y="118" width="68.8" height="12" fill="#3572A5"/>
+  <rect x="767.7" y="118" width="35.5" height="12" fill="#e34c26"/>
+  <rect x="802.6" y="118" width="16.7" height="12" fill="#f34b7d"/>
+  <rect x="818.9" y="118" width="5.6" height="12" fill="#663399"/>
   </g>
-  <circle cx="458" cy="157" r="6" fill="#f1e05a"/><text x="472" y="162" font-size="14" fill="#e2e8f0">JavaScript <tspan fill="#7c83b0">40.5%</tspan></text>
-  <circle cx="648" cy="157" r="6" fill="#3178c6"/><text x="662" y="162" font-size="14" fill="#e2e8f0">TypeScript <tspan fill="#7c83b0">23.6%</tspan></text>
-  <circle cx="458" cy="185" r="6" fill="#3572A5"/><text x="472" y="190" font-size="14" fill="#e2e8f0">Python <tspan fill="#7c83b0">19.7%</tspan></text>
-  <circle cx="648" cy="185" r="6" fill="#e34c26"/><text x="662" y="190" font-size="14" fill="#e2e8f0">HTML <tspan fill="#7c83b0">10.2%</tspan></text>
-  <circle cx="458" cy="213" r="6" fill="#f34b7d"/><text x="472" y="218" font-size="14" fill="#e2e8f0">C++ <tspan fill="#7c83b0">3.5%</tspan></text>
-  <circle cx="648" cy="213" r="6" fill="#663399"/><text x="662" y="218" font-size="14" fill="#e2e8f0">CSS <tspan fill="#7c83b0">2.5%</tspan></text>
+  <circle cx="458" cy="157" r="6" fill="#f1e05a"/><text x="472" y="162" font-size="14" fill="#e2e8f0">JavaScript <tspan fill="#7c83b0">36.8%</tspan></text>
+  <circle cx="648" cy="157" r="6" fill="#3178c6"/><text x="662" y="162" font-size="14" fill="#e2e8f0">TypeScript <tspan fill="#7c83b0">29.7%</tspan></text>
+  <circle cx="458" cy="185" r="6" fill="#3572A5"/><text x="472" y="190" font-size="14" fill="#e2e8f0">Python <tspan fill="#7c83b0">18.4%</tspan></text>
+  <circle cx="648" cy="185" r="6" fill="#e34c26"/><text x="662" y="190" font-size="14" fill="#e2e8f0">HTML <tspan fill="#7c83b0">9.4%</tspan></text>
+  <circle cx="458" cy="213" r="6" fill="#f34b7d"/><text x="472" y="218" font-size="14" fill="#e2e8f0">C++ <tspan fill="#7c83b0">4.4%</tspan></text>
+  <circle cx="648" cy="213" r="6" fill="#663399"/><text x="662" y="218" font-size="14" fill="#e2e8f0">CSS <tspan fill="#7c83b0">1.4%</tspan></text>
 </svg>
