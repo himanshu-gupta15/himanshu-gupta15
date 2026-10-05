@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="590" viewBox="0 0 860 590" font-family="&#x27;JetBrains Mono&#x27;,&#x27;Fira Code&#x27;,&#x27;SFMono-Regular&#x27;,Menlo,Consolas,&#x27;Liberation Mono&#x27;,monospace">
+  <style>
+    text { font-family: 'JetBrains Mono','Fira Code','SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    @keyframes blink { 50% { opacity: 0; } }
+    @keyframes pulse { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+    .reveal { animation: fadeUp .5s ease-out both; }
+    .cursor { animation: blink 1s steps(1) infinite; }
+    .pulse { animation: pulse 2.4s ease-in-out infinite; }
+    /* Transparent canvas: keep text outside the panels readable on light pages. */
+    @media (prefers-color-scheme: light) { .hdr { fill: #1f2340; } .hdr-ext { fill: #3b82c4; } .p-user { fill: #2f8f63; } .p-cmd { fill: #1f2340; } }
+    
+  </style>
+  <defs>
+    <linearGradient id="neon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8ecdf0"/><stop offset=".5" stop-color="#a99cf0"/><stop offset="1" stop-color="#eba7c8"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softglow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.1" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#181d3b"/><stop offset="1" stop-color="#10132a"/>
+    </linearGradient>
+    <linearGradient id="sheen" gradientUnits="userSpaceOnUse" x1="-360" y1="0" x2="0" y2="0">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset=".5" stop-color="#e8f4ff" stop-opacity="1"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+      <animateTransform attributeName="gradientTransform" type="translate" values="0 0;1300 0;1300 0" keyTimes="0;.6;1" dur="8s" repeatCount="indefinite"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="16" y="16" width="828" height="362" rx="14" fill="url(#panel)" stroke="#8ecdf0" stroke-width="2" filter="url(#glow)" opacity=".3"/>
+  <rect x="16" y="16" width="828" height="362" rx="14" fill="url(#panel)" stroke="#8ecdf0" stroke-opacity=".5" stroke-width="1.2"/>
+  <rect x="16" y="16" width="828" height="362" rx="14" fill="none" stroke="url(#sheen)" stroke-width="2.2" filter="url(#softglow)"/>
+  <circle cx="40" cy="38" r="6" fill="#ff5f57"/><circle cx="60" cy="38" r="6" fill="#febc2e"/><circle cx="80" cy="38" r="6" fill="#28c840"/>
+  <line x1="16" y1="60" x2="844" y2="60" stroke="#262b4d"/>
+  <text x="822" y="42" text-anchor="end" font-size="12" fill="#dfe3f5" font-weight="700">~/stack --list</text>
+  <text x="40" y="96" font-size="15" fill="#8a90b8">$ <tspan fill="#dfe3f5">cat ./stack.txt</tspan></text>
+  <text class="reveal" style="animation-delay:0.10s" x="40" y="140" font-size="14" font-weight="700" fill="#8ecdf0">Languages</text>
+  <g class="reveal" style="animation-delay:0.10s"><rect x="176" y="122" width="50" height="28" rx="14" fill="#1c2045" stroke="#8ecdf0" stroke-opacity=".45"/><text x="201" y="141" text-anchor="middle" font-size="13.5" fill="#dfe3f5">C++</text></g>
+  <g class="reveal" style="animation-delay:0.10s"><rect x="236" y="122" width="107" height="28" rx="14" fill="#1c2045" stroke="#8ecdf0" stroke-opacity=".45"/><text x="290" y="141" text-anchor="middle" font-size="13.5" fill="#dfe3f5">TypeScript</text></g>
+  <g class="reveal" style="animation-delay:0.10s"><rect x="353" y="122" width="107" height="28" rx="14" fill="#1c2045" stroke="#8ecdf0" stroke-opacity=".45"/><text x="407" y="141" text-anchor="middle" font-size="13.5" fill="#dfe3f5">JavaScript</text></g>
+  <g class="reveal" style="animation-delay:0.10s"><rect x="470" y="122" width="75" height="28" rx="14" fill="#1c2045" stroke="#8ecdf0" stroke-opacity=".45"/><text x="508" y="141" text-anchor="middle" font-size="13.5" fill="#dfe3f5">Python</text></g>
+  <g class="reveal" style="animation-delay:0.10s"><rect x="554" y="122" width="58" height="28" rx="14" fill="#1c2045" stroke="#8ecdf0" stroke-opacity=".45"/><text x="584" y="141" text-anchor="middle" font-size="13.5" fill="#dfe3f5">Java</text></g>
+  <text class="reveal" style="animation-delay:0.18s" x="40" y="182" font-size="14" font-weight="700" fill="#a99cf0">Frontend</text>
+  <g class="reveal" style="animation-delay:0.18s"><rect x="176" y="164" width="66" height="28" rx="14" fill="#1c2045" stroke="#a99cf0" stroke-opacity=".45"/><text x="209" y="183" text-anchor="middle" font-size="13.5" fill="#dfe3f5">React</text></g>
+  <g class="reveal" style="animation-delay:0.18s"><rect x="252" y="164" width="83" height="28" rx="14" fill="#1c2045" stroke="#a99cf0" stroke-opacity=".45"/><text x="294" y="183" text-anchor="middle" font-size="13.5" fill="#dfe3f5">Next.js</text></g>
+  <g class="reveal" style="animation-delay:0.18s"><rect x="345" y="164" width="66" height="28" rx="14" fill="#1c2045" stroke="#a99cf0" stroke-opacity=".45"/><text x="378" y="183" text-anchor="middle" font-size="13.5" fill="#dfe3f5">Redux</text></g>
+  <g class="reveal" style="animation-delay:0.18s"><rect x="421" y="164" width="123" height="28" rx="14" fill="#1c2045" stroke="#a99cf0" stroke-opacity=".45"/><text x="483" y="183" text-anchor="middle" font-size="13.5" fill="#dfe3f5">Tailwind CSS</text></g>
+  <text class="reveal" style="animation-delay:0.26s" x="40" y="224" font-size="14" font-weight="700" fill="#93d9b4">Backend</text>
+  <g class="reveal" style="animation-delay:0.26s"><rect x="176" y="206" width="83" height="28" rx="14" fill="#1c2045" stroke="#93d9b4" stroke-opacity=".45"/><text x="217" y="225" text-anchor="middle" font-size="13.5" fill="#dfe3f5">Node.js</text></g>
+  <g class="reveal" style="animation-delay:0.26s"><rect x="268" y="206" width="83" height="28" rx="14" fill="#1c2045" stroke="#93d9b4" stroke-opacity=".45"/><text x="310" y="225" text-anchor="middle" font-size="13.5" fill="#dfe3f5">Express</text></g>
+  <g class="reveal" style="animation-delay:0.26s"><rect x="361" y="206" width="66" height="28" rx="14" fill="#1c2045" stroke="#93d9b4" stroke-opacity=".45"/><text x="395" y="225" text-anchor="middle" font-size="13.5" fill="#dfe3f5">Kafka</text></g>
+  <g class="reveal" style="animation-delay:0.26s"><rect x="437" y="206" width="66" height="28" rx="14" fill="#1c2045" stroke="#93d9b4" stroke-opacity=".45"/><text x="471" y="225" text-anchor="middle" font-size="13.5" fill="#dfe3f5">Redis</text></g>
+  <text class="reveal" style="animation-delay:0.34s" x="40" y="266" font-size="14" font-weight="700" fill="#eba7c8">Databases</text>
+  <g class="reveal" style="animation-delay:0.34s"><rect x="176" y="248" width="107" height="28" rx="14" fill="#1c2045" stroke="#eba7c8" stroke-opacity=".45"/><text x="230" y="267" text-anchor="middle" font-size="13.5" fill="#dfe3f5">PostgreSQL</text></g>
+  <g class="reveal" style="animation-delay:0.34s"><rect x="293" y="248" width="83" height="28" rx="14" fill="#1c2045" stroke="#eba7c8" stroke-opacity=".45"/><text x="334" y="267" text-anchor="middle" font-size="13.5" fill="#dfe3f5">MongoDB</text></g>
+  <g class="reveal" style="animation-delay:0.34s"><rect x="385" y="248" width="66" height="28" rx="14" fill="#1c2045" stroke="#eba7c8" stroke-opacity=".45"/><text x="419" y="267" text-anchor="middle" font-size="13.5" fill="#dfe3f5">MySQL</text></g>
+  <g class="reveal" style="animation-delay:0.34s"><rect x="462" y="248" width="75" height="28" rx="14" fill="#1c2045" stroke="#eba7c8" stroke-opacity=".45"/><text x="500" y="267" text-anchor="middle" font-size="13.5" fill="#dfe3f5">Qdrant</text></g>
+  <text class="reveal" style="animation-delay:0.42s" x="40" y="308" font-size="14" font-weight="700" fill="#8ecdf0">AI / LLM</text>
+  <g class="reveal" style="animation-delay:0.42s"><rect x="176" y="290" width="99" height="28" rx="14" fill="#1c2045" stroke="#8ecdf0" stroke-opacity=".45"/><text x="225" y="309" text-anchor="middle" font-size="13.5" fill="#dfe3f5">LangGraph</text></g>
+  <g class="reveal" style="animation-delay:0.42s"><rect x="284" y="290" width="99" height="28" rx="14" fill="#1c2045" stroke="#8ecdf0" stroke-opacity=".45"/><text x="334" y="309" text-anchor="middle" font-size="13.5" fill="#dfe3f5">LangChain</text></g>
+  <g class="reveal" style="animation-delay:0.42s"><rect x="393" y="290" width="50" height="28" rx="14" fill="#1c2045" stroke="#8ecdf0" stroke-opacity=".45"/><text x="419" y="309" text-anchor="middle" font-size="13.5" fill="#dfe3f5">RAG</text></g>
+  <g class="reveal" style="animation-delay:0.42s"><rect x="454" y="290" width="75" height="28" rx="14" fill="#1c2045" stroke="#8ecdf0" stroke-opacity=".45"/><text x="491" y="309" text-anchor="middle" font-size="13.5" fill="#dfe3f5">Gemini</text></g>
+  <g class="reveal" style="animation-delay:0.42s"><rect x="538" y="290" width="58" height="28" rx="14" fill="#1c2045" stroke="#8ecdf0" stroke-opacity=".45"/><text x="568" y="309" text-anchor="middle" font-size="13.5" fill="#dfe3f5">Groq</text></g>
+  <text class="reveal" style="animation-delay:0.50s" x="40" y="350" font-size="14" font-weight="700" fill="#a99cf0">DevOps</text>
+  <g class="reveal" style="animation-delay:0.50s"><rect x="176" y="332" width="75" height="28" rx="14" fill="#1c2045" stroke="#a99cf0" stroke-opacity=".45"/><text x="213" y="351" text-anchor="middle" font-size="13.5" fill="#dfe3f5">Docker</text></g>
+  <g class="reveal" style="animation-delay:0.50s"><rect x="260" y="332" width="50" height="28" rx="14" fill="#1c2045" stroke="#a99cf0" stroke-opacity=".45"/><text x="286" y="351" text-anchor="middle" font-size="13.5" fill="#dfe3f5">AWS</text></g>
+  <g class="reveal" style="animation-delay:0.50s"><rect x="320" y="332" width="139" height="28" rx="14" fill="#1c2045" stroke="#a99cf0" stroke-opacity=".45"/><text x="391" y="351" text-anchor="middle" font-size="13.5" fill="#dfe3f5">GitHub Actions</text></g>
+  <g class="reveal" style="animation-delay:0.50s"><rect x="470" y="332" width="75" height="28" rx="14" fill="#1c2045" stroke="#a99cf0" stroke-opacity=".45"/><text x="508" y="351" text-anchor="middle" font-size="13.5" fill="#dfe3f5">Vercel</text></g>
+  <text x="22" y="422" font-size="16" font-weight="700"><tspan class="p-user" fill="#93d9b4">himanshu@github</tspan><tspan fill="#8a90b8">:~$ </tspan><tspan class="p-cmd" fill="#dfe3f5">./competitive_programming --ratings</tspan></text>
+  <rect x="16" y="436" width="404" height="150" rx="14" fill="url(#panel)" stroke="#e8b86a" stroke-opacity=".45"/>
+  <rect x="16" y="436" width="404" height="150" rx="14" fill="none" stroke="url(#sheen)" stroke-opacity=".8"/>
+  <text x="40" y="470" font-size="12" letter-spacing="2.5" fill="#e8b86a">LEETCODE</text>
+  <text x="40" y="514" font-size="30" font-weight="800" fill="#dfe3f5">Knight</text>
+  <text x="40" y="540" font-size="13" fill="#8a90b8">max contest rating</text>
+  <text x="40" y="564" font-size="12" fill="#565b8a">@himanshu8083</text>
+  <circle cx="346" cy="511" r="40" fill="none" stroke="#262b4d" stroke-width="8"/><circle cx="346" cy="511" r="40" fill="none" stroke="#e8b86a" stroke-width="8" stroke-linecap="round" stroke-dasharray="199.0 251.3" transform="rotate(-90 346 511)" filter="url(#softglow)"><animate attributeName="stroke-dasharray" from="0 251.3" to="199.0 251.3" dur="1.6s" fill="freeze"/></circle><text x="346" y="516" text-anchor="middle" font-size="17" font-weight="800" fill="#dfe3f5">1900+</text>
+  <rect x="440" y="436" width="404" height="150" rx="14" fill="url(#panel)" stroke="#b9a3e8" stroke-opacity=".45"/>
+  <rect x="440" y="436" width="404" height="150" rx="14" fill="none" stroke="url(#sheen)" stroke-opacity=".8"/>
+  <text x="464" y="470" font-size="12" letter-spacing="2.5" fill="#b9a3e8">CODECHEF</text>
+  <text x="464" y="514" font-size="30" font-weight="800" fill="#dfe3f5">4 Star</text>
+  <text x="464" y="540" font-size="13" fill="#8a90b8">max contest rating</text>
+  <text x="464" y="564" font-size="12" fill="#565b8a">@himanshugpt80</text>
+  <circle cx="770" cy="511" r="40" fill="none" stroke="#262b4d" stroke-width="8"/><circle cx="770" cy="511" r="40" fill="none" stroke="#b9a3e8" stroke-width="8" stroke-linecap="round" stroke-dasharray="181.0 251.3" transform="rotate(-90 770 511)" filter="url(#softglow)"><animate attributeName="stroke-dasharray" from="0 251.3" to="181.0 251.3" dur="1.6s" fill="freeze"/></circle><text x="770" y="516" text-anchor="middle" font-size="17" font-weight="800" fill="#dfe3f5">1800+</text>
+</svg>

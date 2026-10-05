@@ -8,7 +8,7 @@
     .cursor { animation: blink 1s steps(1) infinite; }
     .pulse { animation: pulse 2.4s ease-in-out infinite; }
     /* Transparent canvas: keep text outside the panels readable on light pages. */
-    @media (prefers-color-scheme: light) { .hdr { fill: #1f2340; } .hdr-ext { fill: #3b82c4; } }
+    @media (prefers-color-scheme: light) { .hdr { fill: #1f2340; } .hdr-ext { fill: #3b82c4; } .p-user { fill: #2f8f63; } .p-cmd { fill: #1f2340; } }
     
   </style>
   <defs>
@@ -50,23 +50,23 @@
   <text class="reveal" style="animation-delay:0.50s" x="40" y="216" font-size="14.5"><tspan fill="#8ecdf0">!</tspan><tspan fill="#dfe3f5" dx="8">Total Issues:</tspan></text>
   <text class="reveal" style="animation-delay:0.50s" x="404" y="216" text-anchor="end" font-size="15" font-weight="800" fill="#93d9b4">0</text>
   <text class="reveal" style="animation-delay:0.60s" x="40" y="244" font-size="14.5"><tspan fill="#8ecdf0">⌘</tspan><tspan fill="#dfe3f5" dx="8">Public Repos:</tspan></text>
-  <text class="reveal" style="animation-delay:0.60s" x="404" y="244" text-anchor="end" font-size="15" font-weight="800" fill="#93d9b4">25</text>
+  <text class="reveal" style="animation-delay:0.60s" x="404" y="244" text-anchor="end" font-size="15" font-weight="800" fill="#93d9b4">32</text>
   <text class="reveal" style="animation-delay:0.70s" x="40" y="272" font-size="14.5"><tspan fill="#8ecdf0">◎</tspan><tspan fill="#dfe3f5" dx="8">Contributed to (last year):</tspan></text>
-  <text class="reveal" style="animation-delay:0.70s" x="404" y="272" text-anchor="end" font-size="15" font-weight="800" fill="#93d9b4">1</text>
+  <text class="reveal" style="animation-delay:0.70s" x="404" y="272" text-anchor="end" font-size="15" font-weight="800" fill="#93d9b4">3</text>
   <line x1="428" y1="76" x2="428" y2="286" stroke="#262b4d"/>
   <text x="452" y="98" font-size="17" font-weight="800" fill="#8ecdf0" filter="url(#softglow)">Most Used Languages</text>
   <clipPath id="bar"><rect x="452" y="118" width="372" height="12" rx="6"/></clipPath><g clip-path="url(#bar)">
-  <rect x="452.0" y="118" width="137.3" height="12" fill="#d3ca80"/>
-  <rect x="588.8" y="118" width="111.0" height="12" fill="#5686c7"/>
-  <rect x="699.3" y="118" width="68.8" height="12" fill="#5882b1"/>
-  <rect x="767.7" y="118" width="35.5" height="12" fill="#c9695f"/>
-  <rect x="802.6" y="118" width="16.7" height="12" fill="#d46997"/>
-  <rect x="818.9" y="118" width="5.6" height="12" fill="#7859a9"/>
+  <rect x="452.0" y="118" width="151.0" height="12" fill="#d3ca80"/>
+  <rect x="602.5" y="118" width="88.1" height="12" fill="#5686c7"/>
+  <rect x="690.1" y="118" width="73.9" height="12" fill="#5882b1"/>
+  <rect x="763.5" y="118" width="38.5" height="12" fill="#c9695f"/>
+  <rect x="801.6" y="118" width="13.5" height="12" fill="#d46997"/>
+  <rect x="814.5" y="118" width="10.0" height="12" fill="#7859a9"/>
   </g>
-  <circle cx="458" cy="157" r="6" fill="#d3ca80"/><text x="472" y="162" font-size="14" fill="#dfe3f5">JavaScript <tspan fill="#8a90b8">36.8%</tspan></text>
-  <circle cx="648" cy="157" r="6" fill="#5686c7"/><text x="662" y="162" font-size="14" fill="#dfe3f5">TypeScript <tspan fill="#8a90b8">29.7%</tspan></text>
-  <circle cx="458" cy="185" r="6" fill="#5882b1"/><text x="472" y="190" font-size="14" fill="#dfe3f5">Python <tspan fill="#8a90b8">18.4%</tspan></text>
-  <circle cx="648" cy="185" r="6" fill="#c9695f"/><text x="662" y="190" font-size="14" fill="#dfe3f5">HTML <tspan fill="#8a90b8">9.4%</tspan></text>
-  <circle cx="458" cy="213" r="6" fill="#d46997"/><text x="472" y="218" font-size="14" fill="#dfe3f5">C++ <tspan fill="#8a90b8">4.4%</tspan></text>
-  <circle cx="648" cy="213" r="6" fill="#7859a9"/><text x="662" y="218" font-size="14" fill="#dfe3f5">CSS <tspan fill="#8a90b8">1.4%</tspan></text>
+  <circle cx="458" cy="157" r="6" fill="#d3ca80"/><text x="472" y="162" font-size="14" fill="#dfe3f5">JavaScript <tspan fill="#8a90b8">40.5%</tspan></text>
+  <circle cx="648" cy="157" r="6" fill="#5686c7"/><text x="662" y="162" font-size="14" fill="#dfe3f5">TypeScript <tspan fill="#8a90b8">23.6%</tspan></text>
+  <circle cx="458" cy="185" r="6" fill="#5882b1"/><text x="472" y="190" font-size="14" fill="#dfe3f5">Python <tspan fill="#8a90b8">19.7%</tspan></text>
+  <circle cx="648" cy="185" r="6" fill="#c9695f"/><text x="662" y="190" font-size="14" fill="#dfe3f5">HTML <tspan fill="#8a90b8">10.2%</tspan></text>
+  <circle cx="458" cy="213" r="6" fill="#d46997"/><text x="472" y="218" font-size="14" fill="#dfe3f5">C++ <tspan fill="#8a90b8">3.5%</tspan></text>
+  <circle cx="648" cy="213" r="6" fill="#7859a9"/><text x="662" y="218" font-size="14" fill="#dfe3f5">CSS <tspan fill="#8a90b8">2.5%</tspan></text>
 </svg>

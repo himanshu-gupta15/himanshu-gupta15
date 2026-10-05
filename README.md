@@ -28,31 +28,15 @@
   <img src="https://raw.githubusercontent.com/himanshu-gupta15/himanshu-gupta15/output/github-contribution-grid-snake-neon.svg" width="100%" alt="Contribution grid with a snake eating contributions" />
 </p>
 
-<h3 align="center"><code>$ cat ./stack.txt</code></h3>
-
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=cpp,ts,js,python,java,react,nextjs,redux,tailwind,nodejs,express,kafka,redis,postgres,mongodb,docker,aws,githubactions,vercel&theme=dark&perline=10" />
-</p>
-
-<h3 align="center"><code>$ ./competitive_programming --ratings</code></h3>
-
-<p align="center">
-  <a href="https://leetcode.com/u/himanshu8083/"><img src="https://img.shields.io/badge/LeetCode-Knight%20·%201900%2B-0a0a2e?style=for-the-badge&logo=leetcode&logoColor=FFA116&labelColor=0a0a2e&color=2a1250"/></a>
-  <a href="https://www.codechef.com/users/himanshugpt80"><img src="https://img.shields.io/badge/CodeChef-4★%20·%201800%2B-0a0a2e?style=for-the-badge&logo=codechef&logoColor=white&labelColor=0a0a2e&color=2a1250"/></a>
-  <a href="https://www.geeksforgeeks.org/profile/himanshu97h0"><img src="https://img.shields.io/badge/GFG-400%2B%20solved-0a0a2e?style=for-the-badge&logo=geeksforgeeks&logoColor=4ade80&labelColor=0a0a2e&color=2a1250"/></a>
-  <img src="https://img.shields.io/badge/DSA-1750%2B%20problems-0a0a2e?style=for-the-badge&labelColor=0a0a2e&color=2a1250"/>
-</p>
-
-<p align="center">
-  <a href="https://leetcode.com/u/himanshu8083/">
-    <img src="https://leetcard.jacoblin.cool/himanshu8083?theme=dark&font=JetBrains%20Mono&ext=heatmap&border=0&radius=12" alt="LeetCode stats" />
-  </a>
+  <img src="assets/skills.svg" width="100%" alt="Tech stack, LeetCode Knight (1900+) and CodeChef 4 Star (1800+)" />
 </p>
 
 <p align="center">
   <a href="https://linkedin.com/in/himanshu-gupta27"><code>◉ LINKEDIN</code></a>&nbsp;&nbsp;
   <a href="https://portfoliohimanshugupta.netlify.app"><code>◉ PORTFOLIO</code></a>&nbsp;&nbsp;
   <a href="https://leetcode.com/u/himanshu8083/"><code>◉ LEETCODE</code></a>&nbsp;&nbsp;
+  <a href="https://www.codechef.com/users/himanshugpt80"><code>◉ CODECHEF</code></a>&nbsp;&nbsp;
   <a href="mailto:himanshugpt0005@gmail.com"><code>✉ EMAIL</code></a>
 </p>
 

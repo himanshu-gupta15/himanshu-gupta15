@@ -3,6 +3,7 @@
 Pulls live data from the GitHub GraphQL API and writes:
   assets/hero.svg      window with dotted portrait + SYSTEM.INFO + streak row
   assets/stats.svg     GitHub stats and top languages
+  assets/skills.svg    tech stack and competitive-programming ratings
 
 Token: $GITHUB_TOKEN (Actions) or `gh auth token` locally.
 """
@@ -56,6 +57,22 @@ PROFILE = [
     ("Grid.LeetCode", "himanshu8083 · Knight 1900+"),
     ("Grid.CodeChef", "himanshugpt80 · 4★ 1800+"),
 ]
+
+STACK = [
+    ("Languages", ["C++", "TypeScript", "JavaScript", "Python", "Java"]),
+    ("Frontend", ["React", "Next.js", "Redux", "Tailwind CSS"]),
+    ("Backend", ["Node.js", "Express", "Kafka", "Redis"]),
+    ("Databases", ["PostgreSQL", "MongoDB", "MySQL", "Qdrant"]),
+    ("AI / LLM", ["LangGraph", "LangChain", "RAG", "Gemini", "Groq"]),
+    ("DevOps", ["Docker", "AWS", "GitHub Actions", "Vercel"]),
+]
+
+# (platform, handle, rank title, rating label, ring fill, accent)
+RATINGS = [
+    ("LEETCODE", "himanshu8083", "Knight", "1900+", 1900 / 2400, "#e8b86a"),
+    ("CODECHEF", "himanshugpt80", "4 Star", "1800+", 1800 / 2500, "#b9a3e8"),
+]
+
 
 # ---------------------------------------------------------------- data
 
@@ -198,7 +215,7 @@ def svg(w, h, body, style=""):
     .cursor { animation: blink 1s steps(1) infinite; }
     .pulse { animation: pulse 2.4s ease-in-out infinite; }
     /* Transparent canvas: keep text outside the panels readable on light pages. */
-    @media (prefers-color-scheme: light) { .hdr { fill: #1f2340; } .hdr-ext { fill: #3b82c4; } }
+    @media (prefers-color-scheme: light) { .hdr { fill: #1f2340; } .hdr-ext { fill: #3b82c4; } .p-user { fill: #2f8f63; } .p-cmd { fill: #1f2340; } }
     %s
   </style>%s
 %s
@@ -482,6 +499,45 @@ def stats(base, days, totals, colors):
     return svg(W, H, "\n  ".join(b))
 
 
+# ---------------------------------------------------------------- stack + ratings
+
+def skills():
+    W = 860
+    accents = [CYAN, VIOLET, MINT, PINK, CYAN, VIOLET]
+    rows_y0, row_h = 104, 42
+    win_h = 44 + 40 + len(STACK) * row_h + 26
+    b = [window(16, 16, W - 32, win_h, "~/stack --list")]
+    b.append('<text x="40" y="%d" font-size="15" fill="%s">$ <tspan fill="%s">cat ./stack.txt</tspan></text>' % (rows_y0 - 8, MUTED, TEXT))
+    for i, (label, items) in enumerate(STACK):
+        y = rows_y0 + 18 + i * row_h
+        acc = accents[i % len(accents)]
+        b.append('<text class="reveal" style="animation-delay:%.2fs" x="40" y="%d" font-size="14" font-weight="700" fill="%s">%s</text>'
+                 % (.1 + i * .08, y + 18, acc, e(label)))
+        x = 176
+        for item in items:
+            w = 8.1 * len(item) + 26
+            b.append('<g class="reveal" style="animation-delay:%.2fs"><rect x="%d" y="%d" width="%.0f" height="28" rx="14" fill="#1c2045" stroke="%s" stroke-opacity=".45"/>'
+                     '<text x="%.0f" y="%d" text-anchor="middle" font-size="13.5" fill="%s">%s</text></g>'
+                     % (.1 + i * .08, x, y, w, acc, x + w / 2, y + 19, TEXT, e(item)))
+            x += w + 10
+
+    # Ratings
+    top = 16 + win_h + 58
+    b.append('<text x="22" y="%d" font-size="16" font-weight="700"><tspan class="p-user" fill="%s">himanshu@github</tspan><tspan fill="%s">:~$ </tspan>'
+             '<tspan class="p-cmd" fill="%s">./competitive_programming --ratings</tspan></text>' % (top - 14, MINT, MUTED, TEXT))
+    cw, ch = 404, 150
+    for i, (plat, handle, title, rating, pct, acc) in enumerate(RATINGS):
+        x, y = 16 + i * (cw + 20), top
+        b.append('<rect x="%d" y="%d" width="%d" height="%d" rx="14" fill="%s" stroke="%s" stroke-opacity=".45"/>' % (x, y, cw, ch, PANEL, acc))
+        b.append('<rect x="%d" y="%d" width="%d" height="%d" rx="14" fill="none" stroke="url(#sheen)" stroke-opacity=".8"/>' % (x, y, cw, ch))
+        b.append('<text x="%d" y="%d" font-size="12" letter-spacing="2.5" fill="%s">%s</text>' % (x + 24, y + 34, acc, plat))
+        b.append('<text x="%d" y="%d" font-size="30" font-weight="800" fill="%s">%s</text>' % (x + 24, y + 78, TEXT, e(title)))
+        b.append('<text x="%d" y="%d" font-size="13" fill="%s">max contest rating</text>' % (x + 24, y + 104, MUTED))
+        b.append('<text x="%d" y="%d" font-size="12" fill="%s">@%s</text>' % (x + 24, y + 128, FAINT, e(handle)))
+        b.append(ring(x + cw - 74, y + ch // 2, 40, pct, rating, color=acc, width=8, size=17))
+    return svg(W, top + ch + 4, "\n  ".join(b))
+
+
 # ---------------------------------------------------------------- main
 
 def main():
@@ -501,6 +557,7 @@ def main():
 
     (ASSETS / "hero.svg").write_text(hero(sum(days.values()), current, longest, first.strftime("%b %-d, %Y"), cur_range))
     (ASSETS / "stats.svg").write_text(stats(base, days, totals, colors))
+    (ASSETS / "skills.svg").write_text(skills())
 
     print("total=%d current=%d longest=%d" % (sum(days.values()), current, longest))
 
