@@ -3,7 +3,6 @@
 Pulls live data from the GitHub GraphQL API and writes:
   assets/hero.svg      window with dotted portrait + SYSTEM.INFO + streak row
   assets/stats.svg     GitHub stats and top languages
-  assets/projects.svg  ./projects.sh --all project cards
 
 Token: $GITHUB_TOKEN (Actions) or `gh auth token` locally.
 """
@@ -58,29 +57,6 @@ PROFILE = [
     ("Grid.LeetCode", "himanshu8083 · Knight 1900+"),
     ("Grid.CodeChef", "himanshugpt80 · 4★ 1800+"),
 ]
-
-# (repo, display title, description lines, tags)
-PROJECTS = [
-    ("MultiMind", "MultiMind", ["Multi-agent AI platform: 5 microservices,",
-                                "8+ LangGraph agents, Qdrant-backed RAG"],
-     ["LangGraph", "React", "Docker"]),
-    ("DrawixAi", "DravixAI", ["Voice agents grounded in a knowledge base,",
-                              "local ONNX embeddings + Whisper ASR"],
-     ["Next.js", "RAG", "Voice"]),
-    ("JobPortal", "CareerLaunch", ["AI job portal: Kafka events, Redis cache",
-                                   "(-40% latency), Gemini resume screening"],
-     ["Next.js", "Kafka", "Gemini"]),
-    ("Brainwave_weather_bot", "Brainwave", ["Weather-safety chat bot: a rule engine",
-                                            "decides, the LLM only words the answer"],
-     ["LangGraph.js", "Open-Meteo"]),
-    ("Alogrise", "ALGORISE", ["Competitive programming arena with live",
-                              "leaderboards and XP gamification"],
-     ["MERN", "Redux", "Redis"]),
-    ("College-Finder", "CollegeFinder", ["College discovery and comparison",
-                                         "platform for Indian higher education"],
-     ["Next.js", "React 19", "Tailwind"]),
-]
-
 
 # ---------------------------------------------------------------- data
 
@@ -178,15 +154,6 @@ def lang_totals(repos):
             totals[name] = totals.get(name, 0) + e["size"] / size
             colors[name] = soften(e["node"]["color"] or MUTED)
     return totals, colors
-
-
-def ago(iso):
-    then = dt.datetime.fromisoformat(iso.replace("Z", "+00:00"))
-    s = (dt.datetime.now(dt.timezone.utc) - then).total_seconds()
-    for unit, size in (("d", 86400), ("h", 3600), ("m", 60)):
-        if s >= size:
-            return "%d%s ago" % (s // size, unit)
-    return "just now"
 
 
 # ---------------------------------------------------------------- svg helpers
@@ -519,58 +486,6 @@ def stats(base, days, totals, colors):
     return svg(W, H, "\n  ".join(b))
 
 
-# ---------------------------------------------------------------- projects
-
-def projects(repo_map):
-    W, cw, ch, gap = 860, 404, 206, 20
-    rows = math.ceil(len(PROJECTS) / 2)
-    H = 68 + rows * (ch + gap) + 4
-    b = ['<text x="22" y="42" font-size="17" font-weight="700"><tspan fill="%s">himanshu@github</tspan><tspan fill="%s">:~$ </tspan>'
-         '<tspan fill="%s">./projects.sh --all</tspan><tspan class="cursor" fill="%s"> █</tspan></text>' % (MINT, MUTED, TEXT, CYAN)]
-    for idx, (repo, title, desc, tags) in enumerate(PROJECTS):
-        r = repo_map.get(repo, {})
-        x = 16 + (idx % 2) * (cw + gap)
-        y = 68 + (idx // 2) * (ch + gap)
-        g = ['<g class="reveal" style="animation-delay:%.2fs">' % (.15 * idx)]
-        g.append('<rect x="%d" y="%d" width="%d" height="%d" rx="12" fill="%s" stroke="%s" stroke-opacity=".4"/>' % (x, y, cw, ch, PANEL, VIOLET))
-        g.append('<rect x="%d" y="%d" width="%d" height="%d" rx="12" fill="none" stroke="url(#sheen)" stroke-opacity=".8"/>' % (x, y, cw, ch))
-        g.append('<text x="%d" y="%d" font-size="12" fill="%s">%s/%s</text>' % (x + 18, y + 26, MUTED, USER, e(repo.lower())))
-        g.append('<circle cx="%d" cy="%d" r="4.5" fill="%s" opacity=".85"/>' % (x + cw - 20, y + 22, MINT))
-        g.append('<text x="%d" y="%d" font-size="22" font-weight="800" fill="%s">%s<tspan fill="%s">_</tspan></text>' % (x + 18, y + 58, TEXT, e(title), CYAN))
-        for i, line in enumerate(desc):
-            g.append('<text x="%d" y="%d" font-size="13" fill="%s">%s</text>' % (x + 18, y + 84 + i * 18, "#b3b8d9", e(line)))
-        tx = x + 18
-        for t in tags:
-            tw = 7.6 * len(t) + 20
-            g.append('<rect x="%d" y="%d" width="%.0f" height="24" rx="12" fill="#1f2147" stroke="%s" stroke-opacity=".6"/>' % (tx, y + 122, tw, VIOLET))
-            g.append('<text x="%.0f" y="%d" text-anchor="middle" font-size="12" fill="#d9d3fb">%s</text>' % (tx + tw / 2, y + 138, e(t)))
-            tx += tw + 8
-        meta = "★ %d · updated %s" % (r.get("stargazerCount", 0), ago(r["pushedAt"]) if r.get("pushedAt") else "-")
-        g.append('<text x="%d" y="%d" font-size="12" fill="%s">%s</text>' % (x + 18, y + 186, MUTED, e(meta)))
-
-        langs = [(ed["node"]["name"], ed["size"], soften(ed["node"]["color"] or MUTED)) for ed in r.get("languages", {}).get("edges", [])]
-        whole = float(sum(s for _, s, _ in langs)) or 1
-        cx, cy, rad = x + cw - 48, y + 166, 24
-        if langs:
-            circ, off = 2 * math.pi * rad, 0
-            g.append('<circle cx="%d" cy="%d" r="%d" fill="none" stroke="%s" stroke-width="7"/>' % (cx, cy, rad, LINE))
-            for name, s, col in langs[:4]:
-                seg = circ * s / whole
-                g.append('<circle cx="%d" cy="%d" r="%d" fill="none" stroke="%s" stroke-width="7" stroke-dasharray="%.1f %.1f" '
-                         'stroke-dashoffset="%.1f" transform="rotate(-90 %d %d)"/>' % (cx, cy, rad, col, seg, circ, -off, cx, cy))
-                off += seg
-            g.append('<text x="%d" y="%d" text-anchor="middle" font-size="12" font-weight="800" fill="%s">%d%%</text>'
-                     % (cx, cy + 4, TEXT, round(100 * langs[0][1] / whole)))
-            shown = [l for l in langs if round(100 * l[1] / whole) >= 1][:3]
-            for i, (name, s, col) in enumerate(shown):
-                ly = y + 160 + i * 16
-                g.append('<circle cx="%d" cy="%d" r="4" fill="%s"/><text x="%d" y="%d" font-size="11.5" fill="%s">%s %d%%</text>'
-                         % (x + cw - 196, ly, col, x + cw - 187, ly + 4, "#c4c9e8", e(name), round(100 * s / whole)))
-        g.append("</g>")
-        b.append("".join(g))
-    return svg(W, H, "\n  ".join(b))
-
-
 # ---------------------------------------------------------------- main
 
 def main():
@@ -591,8 +506,6 @@ def main():
     (ASSETS / "hero.svg").write_text(hero(sum(days.values()), current, longest, first.strftime("%b %-d, %Y"), cur_range))
     (ASSETS / "stats.svg").write_text(stats(base, days, totals, colors))
 
-    repo_map = {r["name"]: r for r in repos}
-    (ASSETS / "projects.svg").write_text(projects(repo_map))
     print("total=%d current=%d longest=%d" % (sum(days.values()), current, longest))
 
 

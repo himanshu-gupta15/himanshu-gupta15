@@ -28,19 +28,6 @@
   <img src="https://raw.githubusercontent.com/himanshu-gupta15/himanshu-gupta15/output/github-contribution-grid-snake-neon.svg" width="100%" alt="Contribution grid with a snake eating contributions" />
 </p>
 
-<p align="center">
-  <img src="assets/projects.svg" width="100%" alt="Featured projects: MultiMind, DravixAI, CareerLaunch, Brainwave, ALGORISE, CollegeFinder" />
-</p>
-
-<p align="center">
-  <a href="https://github.com/himanshu-gupta15/MultiMind"><code>multimind</code></a> ·
-  <a href="https://dravix-ai.vercel.app"><code>dravix-ai ↗</code></a> ·
-  <a href="https://github.com/himanshu-gupta15/JobPortal"><code>careerlaunch</code></a> ·
-  <a href="https://github.com/himanshu-gupta15/Brainwave_weather_bot"><code>brainwave</code></a> ·
-  <a href="https://alogrise.vercel.app"><code>algorise ↗</code></a> ·
-  <a href="https://college-finder-chi-gold.vercel.app"><code>college-finder ↗</code></a>
-</p>
-
 <h3 align="center"><code>$ cat ./stack.txt</code></h3>
 
 <p align="center">
