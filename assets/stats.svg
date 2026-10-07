@@ -44,7 +44,7 @@
   <text class="reveal" style="animation-delay:0.20s" x="40" y="132" font-size="14.5"><tspan fill="#8ecdf0">★</tspan><tspan fill="#dfe3f5" dx="8">Total Stars Earned:</tspan></text>
   <text class="reveal" style="animation-delay:0.20s" x="404" y="132" text-anchor="end" font-size="15" font-weight="800" fill="#93d9b4">8</text>
   <text class="reveal" style="animation-delay:0.30s" x="40" y="160" font-size="14.5"><tspan fill="#8ecdf0">◆</tspan><tspan fill="#dfe3f5" dx="8">Total Commits (last year):</tspan></text>
-  <text class="reveal" style="animation-delay:0.30s" x="404" y="160" text-anchor="end" font-size="15" font-weight="800" fill="#93d9b4">571</text>
+  <text class="reveal" style="animation-delay:0.30s" x="404" y="160" text-anchor="end" font-size="15" font-weight="800" fill="#93d9b4">572</text>
   <text class="reveal" style="animation-delay:0.40s" x="40" y="188" font-size="14.5"><tspan fill="#8ecdf0">⇄</tspan><tspan fill="#dfe3f5" dx="8">Total PRs:</tspan></text>
   <text class="reveal" style="animation-delay:0.40s" x="404" y="188" text-anchor="end" font-size="15" font-weight="800" fill="#93d9b4">12</text>
   <text class="reveal" style="animation-delay:0.50s" x="40" y="216" font-size="14.5"><tspan fill="#8ecdf0">!</tspan><tspan fill="#dfe3f5" dx="8">Total Issues:</tspan></text>
