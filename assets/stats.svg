@@ -57,16 +57,16 @@
   <text x="452" y="98" font-size="17" font-weight="800" fill="#8ecdf0" filter="url(#softglow)">Most Used Languages</text>
   <clipPath id="bar"><rect x="452" y="118" width="372" height="12" rx="6"/></clipPath><g clip-path="url(#bar)">
   <rect x="452.0" y="118" width="121.0" height="12" fill="#d3ca80"/>
-  <rect x="572.5" y="118" width="106.1" height="12" fill="#5686c7"/>
-  <rect x="678.1" y="118" width="76.6" height="12" fill="#5882b1"/>
-  <rect x="754.1" y="118" width="37.5" height="12" fill="#c9695f"/>
-  <rect x="791.1" y="118" width="24.5" height="12" fill="#d46997"/>
-  <rect x="815.2" y="118" width="9.3" height="12" fill="#7859a9"/>
+  <rect x="572.5" y="118" width="105.4" height="12" fill="#5686c7"/>
+  <rect x="677.4" y="118" width="76.6" height="12" fill="#5882b1"/>
+  <rect x="753.5" y="118" width="37.3" height="12" fill="#c9695f"/>
+  <rect x="790.2" y="118" width="24.5" height="12" fill="#d46997"/>
+  <rect x="814.3" y="118" width="10.2" height="12" fill="#7859a9"/>
   </g>
   <circle cx="458" cy="157" r="6" fill="#d3ca80"/><text x="472" y="162" font-size="14" fill="#dfe3f5">JavaScript <tspan fill="#8a90b8">32.4%</tspan></text>
-  <circle cx="648" cy="157" r="6" fill="#5686c7"/><text x="662" y="162" font-size="14" fill="#dfe3f5">TypeScript <tspan fill="#8a90b8">28.4%</tspan></text>
+  <circle cx="648" cy="157" r="6" fill="#5686c7"/><text x="662" y="162" font-size="14" fill="#dfe3f5">TypeScript <tspan fill="#8a90b8">28.2%</tspan></text>
   <circle cx="458" cy="185" r="6" fill="#5882b1"/><text x="472" y="190" font-size="14" fill="#dfe3f5">Python <tspan fill="#8a90b8">20.4%</tspan></text>
   <circle cx="648" cy="185" r="6" fill="#c9695f"/><text x="662" y="190" font-size="14" fill="#dfe3f5">HTML <tspan fill="#8a90b8">9.9%</tspan></text>
   <circle cx="458" cy="213" r="6" fill="#d46997"/><text x="472" y="218" font-size="14" fill="#dfe3f5">C++ <tspan fill="#8a90b8">6.5%</tspan></text>
-  <circle cx="648" cy="213" r="6" fill="#7859a9"/><text x="662" y="218" font-size="14" fill="#dfe3f5">CSS <tspan fill="#8a90b8">2.4%</tspan></text>
+  <circle cx="648" cy="213" r="6" fill="#7859a9"/><text x="662" y="218" font-size="14" fill="#dfe3f5">CSS <tspan fill="#8a90b8">2.6%</tspan></text>
 </svg>
